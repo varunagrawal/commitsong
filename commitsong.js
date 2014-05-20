@@ -1,5 +1,6 @@
 CLIENT_ID = "b0cdce6d049d97e8d1b3";
 CLIENT_SECRET = "109e825552093e60fab8810fd59c8855d4740bfa";
+TOKEN = null;
 
 $( document ).ready( function(){
     $("#login").click( function(){
@@ -7,18 +8,19 @@ $( document ).ready( function(){
     });
     
     var result = getURLParameters(document.URL);
-
     alert(result["code"]);
 
     if(result["code"] != null)
     {
-	var code = getToken(result["code"]);
-	
+	TOKEN = getToken(result["code"]);
+	alert(TOKEN);
+
 	main();
     }
 });
 
-function main(){
+function main(token){
+
     var xhr = new XMLHttpRequest();
     xhr.open("GET", "https://api.github.com/user", false);
     xhr.send();
@@ -50,8 +52,21 @@ function getURLParameters(url){
 
 function getToken(code){
     var xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://github.com/login/oauth/access_token?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code + "redirect_uri=http://varunagrawal.github.io/commitsong/", false);
+    
+    $.ajax({
+	type: "POST",
+	url: "https://github.com/login/oauth/access_token?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code + "redirect_uri=http://varunagrawal.github.io/commitsong/",
+	data: { foo: 'bar' },
+	beforeSend: function(xhr) {
+	    xhr.setRequestHeader("Origin", "http://varunagrawal.github.io/commitsong/");
+	}
+    })
+	.success(function(){alert("success")})
+	.error(function(){alert("error")});
 
+    /*xhr.open("POST", "https://github.com/login/oauth/access_token?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code + "redirect_uri=http://varunagrawal.github.io/commitsong/", false);
+
+    xhr.setRequestHeader("Origin", "https://varunagrawal.github.io/commitsong/");
     xhr.send();
     
     var arr = xhr.responseText;
@@ -66,5 +81,5 @@ function getToken(code){
 	}
     }
     
-    return result;
+    return result;*/
 }
