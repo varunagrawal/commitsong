@@ -1,4 +1,11 @@
-function request(url, type, data, onSuccess, onError){
+function request(url, type, data, onSuccess, onError, contentType){
+
+    if(contentType === undefined){
+	contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+    }
+    else if(contentType == 'application/json'){
+	data = JSON.stringify(data);
+    }
 
     $.ajax({
 	type: type,
@@ -9,8 +16,9 @@ function request(url, type, data, onSuccess, onError){
 	    xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
 	},*/
 	crossDomain: true,
-	dataType: 'json',
+	contentType: contentType,
 	data: data,
+	dataType: 'json',
 	statusCode: {
 	    404: function(){alert("Not found")},
 	},
@@ -52,7 +60,7 @@ function authorize(){
     var url = "https://github.com/login/oauth/access_token";
     var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code, redirect_uri: "http://varunagrawal.github.io/commitsong/index.html"}
     
-    request(url, 'POST', data, onAuthorization, onError);
+    request(url, 'POST', data, onAuthorization, onError, 'application/json');
     
 }
 
