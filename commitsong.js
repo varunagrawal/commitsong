@@ -1,6 +1,15 @@
 $( document ).ready( function(){
 
-    login();
+    if(getAccessToken() == null){
+
+	var result = getQueryStringParameters();
+	if(result.code == null){
+	    login();
+	}else{
+	    alert("Authorizing...");
+	    authorize();
+	}
+    }
     //test();
     /*
       $("#login").click( function(){

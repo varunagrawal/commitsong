@@ -47,10 +47,12 @@ function authorize(){
     var url = "https://github.com/login/oauth/access_token";
     var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code, redirect_uri: "http://varunagrawal.github.io/commitsong/index.html"}
     
-    alert("Token request");
-
     request(url, 'POST', data, function(responseData){alert("auth success")}, function(){alert("error")});
     
+}
+
+function onAuthorization(reponseData){
+    alert(JSON.stringify(responseData));
 }
 
 function getNonce(){
