@@ -40,6 +40,7 @@ function login(){
 }
 
 function authorize(){
+    alert("authorize start");
     //if(result['state'] == state)
     var result = getQueryStringParameters();
 
