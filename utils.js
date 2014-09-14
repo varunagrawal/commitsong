@@ -4,7 +4,11 @@ function request(url, type, data, onSuccess, onError){
     $.ajax({
 	type: type,
 	url: url,
-	headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://varunagrawal.github.io' },
+	/*headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://www.varunagrawal.me' },*/
+	beforeSend: function(xhr){
+	    xhr.setRequestHeader('Origin', 'http://www.varunagrawal.me');
+	    xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+	},
 	crossDomain: true,
 	dataType: 'json',
 	data: data,
