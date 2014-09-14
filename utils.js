@@ -52,7 +52,9 @@ function authorize(){
 }
 
 function onAuthorization(reponseData){
-    alert(JSON.stringify(responseData));
+    alert("authorized");
+    alert(responseData);
+    //alert(JSON.stringify(responseData));
 }
 
 function getNonce(){
