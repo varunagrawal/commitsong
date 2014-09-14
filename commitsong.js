@@ -1,6 +1,6 @@
 $( document ).ready( function(){
 
-    /*if(getAccessToken() == null){
+    if(getAccessToken() == null){
 
 	var result = getQueryStringParameters();
 	if(result.code == null){
@@ -9,8 +9,8 @@ $( document ).ready( function(){
 	    alert("Authorizing...");
 	    authorize();
 	}
-    }*/
-    test();
+    }
+    //test();
     /*
       $("#login").click( function(){
 	login();
@@ -29,7 +29,7 @@ $( document ).ready( function(){
 });
 
 function test(){
-    request("https://api.github.com", 'GET', {varun: 'AGRAWAL'}, function(response){alert(response.data.current_user_url)}, function(){alert("test error")})
+    request("https://api.github.com", 'GET', {varun: 'AGRAWAL'}, function(response){alert(JSON.stringify(response))}, function(){alert("test error")})
 }
 
 function main(token){

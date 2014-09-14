@@ -1,14 +1,13 @@
 function request(url, type, data, onSuccess, onError){
-    alert(JSON.stringify(data));
 
     $.ajax({
 	type: type,
 	url: url,
-	/*headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://www.varunagrawal.me' },*/
-	beforeSend: function(xhr){
+	headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://www.varunagrawal.me' },
+	/*beforeSend: function(xhr){
 	    xhr.setRequestHeader('Origin', 'http://www.varunagrawal.me');
 	    xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-	},
+	},*/
 	crossDomain: true,
 	dataType: 'json',
 	data: data,
@@ -18,6 +17,7 @@ function request(url, type, data, onSuccess, onError){
 	error: onError,
 	success: onSuccess
     });
+
 }
 
 function getQueryStringParameters(){
