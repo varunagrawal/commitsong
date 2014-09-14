@@ -1,6 +1,7 @@
 $( document ).ready( function(){
 
-    login();
+    //login();
+    test();
     /*
       $("#login").click( function(){
 	login();
@@ -17,6 +18,10 @@ $( document ).ready( function(){
 	main();
     }*/
 });
+
+function test(){
+    request("https://api.github.com", 'GET', {varun: 'AGRAWAL'}, function(response){alert(response.data.current_user_url)}, function(){alert("test error")})
+}
 
 function main(token){
 };

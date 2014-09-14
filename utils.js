@@ -40,14 +40,16 @@ function login(){
 }
 
 function authorize(){
-    alert("authorize start");
+
     //if(result['state'] == state)
     var result = getQueryStringParameters();
 
+    alert(result.code);
+    
     var url = "https://github.com/login/oauth/access_token";
     var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code, redirect_uri: "http://varunagrawal.github.io/commitsong/"}
     
-    request(url, 'POST', data, alert(getQueryStringParameters().access_token), alert("error"));
+    request(url, 'POST', data, function(responseData){alert(getQueryStringParameters().access_token)}, function(){alert("error")});
     
 }
 
