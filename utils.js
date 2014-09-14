@@ -4,7 +4,7 @@ function request(url, type, data, onSuccess, onError){
 	url: url,
 	headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://www.varunagrawal.me' },
 	crossDomain: true,
-	dataType: 'jsonp',
+	dataType: 'json',
 	async: false,
 	data: data,
 	statusCode: {
@@ -47,7 +47,7 @@ function authorize(){
     var url = "https://github.com/login/oauth/access_token";
     var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code, redirect_uri: "http://varunagrawal.github.io/commitsong/index.html"}
     
-    request(url, 'POST', data, onAuthorization, function(){alert("error in auth")});
+    request(url, 'POST', data, onAuthorization, onError);
     
 }
 
@@ -56,6 +56,8 @@ function onAuthorization(reponseData){
     alert(responseData);
     alert(JSON.stringify(responseData));
 }
+
+function on
 
 function getNonce(){
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
