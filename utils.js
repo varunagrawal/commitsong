@@ -77,3 +77,7 @@ function getClientSecret(){
     TOKEN = null;
     return CLIENT_SECRET;
 }
+
+function getAccessToken(){
+    return null;
+}
