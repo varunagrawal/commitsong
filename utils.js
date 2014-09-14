@@ -47,9 +47,9 @@ function authorize(){
     alert(result.code);
     
     var url = "https://github.com/login/oauth/access_token";
-    var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code, redirect_uri: "http://varunagrawal.github.io/commitsong/"}
+    var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code, redirect_uri: "http://varunagrawal.github.io/commitsong/index.html"}
     
-    request(url, 'POST', data, function(responseData){alert(getQueryStringParameters().access_token)}, function(){alert("error")});
+    request(url, 'POST', data, function(responseData){alert("auth success")}, function(){alert("error")});
     
 }
 
@@ -71,7 +71,7 @@ function getClientID(){
 }
 
 function getClientSecret(){
-    CLIENT_SECRET = "109e825552093e60fab8810fd59c8855d4740bfa";
+    var CLIENT_SECRET = "109e825552093e60fab8810fd59c8855d4740bfa";
     TOKEN = null;
     return CLIENT_SECRET;
 }
