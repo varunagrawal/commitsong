@@ -4,7 +4,7 @@ function request(url, type, data, onSuccess, onError){
     $.ajax({
 	type: type,
 	url: url,
-	headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://www.varunagrawal.me' },
+	headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://varunagrawal.github.io' },
 	crossDomain: true,
 	dataType: 'json',
 	data: data,
