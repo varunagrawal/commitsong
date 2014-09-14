@@ -57,7 +57,9 @@ function onAuthorization(reponseData){
     alert(JSON.stringify(responseData));
 }
 
-function on
+function onError(jqxhr, textStatus, errorThrown){
+    alert(textStatus);
+}
 
 function getNonce(){
     var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
