@@ -46,7 +46,7 @@ function getQueryStringParameters(){
 var state = getNonce();
 function login(){
 
-    var redirect_uri = "http://varunagrawal.github.io/commitsong/index.html";
+    var redirect_uri = "http://www.varunagrawal.me/commitsong/index.html";
 
     window.location.replace("https://github.com/login/oauth/authorize?client_id=" + getClientID() + "&redirect_uri=" + redirect_uri + "&scope=user,user:email,public_repo,repo:status&state=" + state);
     
@@ -58,7 +58,7 @@ function authorize(){
     var result = getQueryStringParameters();
     
     var url = "https://github.com/login/oauth/access_token";
-    var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code, redirect_uri: "http://varunagrawal.github.io/commitsong/index.html"}
+    var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code, redirect_uri: "http://www.varunagrawal.me/commitsong/index.html"}
     
     request(url, 'POST', data, onAuthorization, onError, 'application/json');
     

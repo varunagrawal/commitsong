@@ -40,7 +40,7 @@ function getToken(code){
     
     $.ajax({
 	type: "POST",
-	url: "https://github.com/login/oauth/access_token?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code + "redirect_uri=http://varunagrawal.github.io/commitsong/",
+	url: "https://github.com/login/oauth/access_token?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code + "redirect_uri=http://varunagrawal.git/commitsong/",
 	data: { foo: 'bar' },
 	beforeSend: function(xhr) {
 	    xhr.setRequestHeader("Origin", "http://varunagrawal.github.io/commitsong/");
