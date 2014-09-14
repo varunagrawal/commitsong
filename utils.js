@@ -1,11 +1,12 @@
 function request(url, type, data, onSuccess, onError){
+    alert(JSON.stringify(data));
+
     $.ajax({
 	type: type,
 	url: url,
 	headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://www.varunagrawal.me' },
 	crossDomain: true,
 	dataType: 'json',
-	async: false,
 	data: data,
 	statusCode: {
 	    404: function(){alert("Not found")},

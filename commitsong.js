@@ -1,6 +1,6 @@
 $( document ).ready( function(){
 
-    if(getAccessToken() == null){
+    /*if(getAccessToken() == null){
 
 	var result = getQueryStringParameters();
 	if(result.code == null){
@@ -9,8 +9,8 @@ $( document ).ready( function(){
 	    alert("Authorizing...");
 	    authorize();
 	}
-    }
-    //test();
+    }*/
+    test();
     /*
       $("#login").click( function(){
 	login();
