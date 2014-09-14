@@ -1,7 +1,7 @@
 $( document ).ready( function(){
 
-    //login();
-    test();
+    login();
+    //test();
     /*
       $("#login").click( function(){
 	login();
