@@ -10,7 +10,7 @@ function request(url, type, data, onSuccess, onError, contentType){
     $.ajax({
 	type: type,
 	url: url,
-	headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://www.varunagrawal.me' },
+	headers: { 'Accept': 'application/vnd.github.v3+json', 'Origin': 'http://www.varunagrawal.me/commitsong' },
 	/*beforeSend: function(xhr){
 	    xhr.setRequestHeader('Origin', 'http://www.varunagrawal.me');
 	    xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
