@@ -43,12 +43,12 @@ function authorize(){
 
     //if(result['state'] == state)
     var result = getQueryStringParameters();
-
-    alert(result.code);
     
     var url = "https://github.com/login/oauth/access_token";
     var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code, redirect_uri: "http://varunagrawal.github.io/commitsong/index.html"}
     
+    alert("Token request");
+
     request(url, 'POST', data, function(responseData){alert("auth success")}, function(){alert("error")});
     
 }
