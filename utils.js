@@ -33,7 +33,7 @@ function getQueryStringParameters(){
 var state = getNonce();
 function login(){
 
-    var redirect_uri = "http://varunagrawal.github.io/commitsong/authenticated.html";
+    var redirect_uri = "http://varunagrawal.github.io/commitsong/index.html";
 
     window.location.replace("https://github.com/login/oauth/authorize?client_id=" + getClientID() + "&redirect_uri=" + redirect_uri + "&scope=user,user:email,public_repo,repo:status&state=" + state);
     
