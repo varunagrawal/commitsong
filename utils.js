@@ -18,7 +18,7 @@ function request(url, type, data, onSuccess, onError, contentType){
 	crossDomain: true,
 	contentType: contentType,
 	data: data,
-	dataType: 'json',
+	dataType: 'jsonp',
 	statusCode: {
 	    404: function(){alert("Not found")},
 	},
