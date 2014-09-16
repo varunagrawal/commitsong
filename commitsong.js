@@ -1,38 +1,46 @@
 $( document ).ready( function(){
+    
+    var size = moment().diff(moment().subtract(1, 'years'), 'days');
+	
+    var commitData = getYearArray(size);
 
-    getRepos('varunagrawal', commits, errorMessage);
+    getRepos('varunagrawal', commits(commitData), errorMessage);
     //displayRepos("Varun");
 
 });
 
-function commits(data){
-    getCommits('varunagrawal', 'ShowOfHands', display, errorMessage, 'varunagrawal', '2013-09-17T01:09:12+05:30');
-    /*for(var i=0; i< data.length; i++){
-	alert(data[i].name);
-
-    }*/
+var commits = function(commitData){ 
+    return function(data){
+	getCommits('varunagrawal', 'ShowOfHands', display(commitData), errorMessage, 'varunagrawal', '2013-09-17T01:09:12+05:30');
+	getCommits('varunagrawal', 'Novella', display(commitData), errorMessage, 'varunagrawal', '2013-09-17T01:09:12+05:30');
+	/*for(var i=0; i< data.length; i++){
+	  alert(data[i].name);
+	  
+	}*/
+    }
 }
 
-function display(data){
-
-    var now = moment();
-    var oneYearAgo = moment().subtract(1, 'years'); 
-
-    var commitData = []
-    var size = now.diff(oneYearAgo, 'days');
-    for(var i=0; i<size; i++) commitData[i] = 0;
-
-    for(var i=0; i<data.length; i++){
+var display = function(commitData){
+    return function(data){
 	
-	var commitDate = moment(data[i].commit.committer.date);
-	if(commitDate.isBefore(now) && commitDate.isAfter(oneYearAgo)){
-	    //alert(commitDate.diff(oneYearAgo, 'days'));
-	    commitData[commitDate.diff(oneYearAgo, 'days')] += 1;
+	var now = moment();
+	var oneYearAgo = moment().subtract(1, 'years'); 
+	
+	var size = now.diff(oneYearAgo, 'days');
+	//commitData = commitData || getYearArray(size);
+	
+	for(var i=0; i<data.length; i++){
+	    
+	    var commitDate = moment(data[i].commit.committer.date);
+	    if(commitDate.isBefore(now) && commitDate.isAfter(oneYearAgo)){
+		//alert(commitDate.diff(oneYearAgo, 'days'));
+		commitData[commitDate.diff(oneYearAgo, 'days')] += 1;
+	    }
+	    
 	}
-
+	
+	$('#data').text(commitData);
     }
-    
-    $('#data').text(commitData);
 }
 
 function errorMessage(){
@@ -47,4 +55,12 @@ function getRepos(username, onSuccess, onError){
 
 function getCommits(username, repo, onSuccess, onError, author, since){
     request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {author: author, since: since}, onSuccess, onError);
+}
+
+
+function getYearArray(size){
+    var arr = []
+    for(var i=0; i<size; i++) arr[i] = 0;
+
+    return arr;
 }
