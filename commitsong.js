@@ -1,70 +1,32 @@
 $( document ).ready( function(){
 
-    if(getAccessToken() == null){
+    getRepos('varunagrawal', commits, errorMessage);
+    //displayRepos("Varun");
 
-	var result = getQueryStringParameters();
-	if(result.code == null){
-	    login();
-	}else{
-	    alert("Authorizing...");
-	    authorize();
-	}
-    }
-    //test();
-    /*
-      $("#login").click( function(){
-	login();
-    });
-    
-    var result = getURLParameters(document.URL);
-    alert(result["code"]);
-
-    if(result["code"] != null)
-    {
-	TOKEN = getToken(result["code"]);
-	alert(TOKEN);
-
-	main();
-    }*/
 });
 
-function test(){
-    request("https://api.github.com", 'GET', {varun: 'AGRAWAL'}, function(response){alert(JSON.stringify(response))}, function(){alert("test error")})
+function commits(data){
+    getCommits('varunagrawal', data[0].name, display, errorMessage);
+    /*for(var i=0; i< data.length; i++){
+	alert(data[i].name);
+
+    }*/
 }
 
-function main(token){
-};
+function display(data){
+    $('#data').text(JSON.stringify(data));
+}
 
-function getToken(code){
-    var xhr = new XMLHttpRequest();
-    
-    $.ajax({
-	type: "POST",
-	url: "https://github.com/login/oauth/access_token?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code + "redirect_uri=http://varunagrawal.git/commitsong/",
-	data: { foo: 'bar' },
-	beforeSend: function(xhr) {
-	    xhr.setRequestHeader("Origin", "http://varunagrawal.github.io/commitsong/");
-	}
-    })
-	.success(function(){alert("success")})
-	.error(function(){alert("error")});
+function errorMessage(){
+    alert("Worst error message ever!!");
+}
 
-    /*xhr.open("POST", "https://github.com/login/oauth/access_token?client_id=" + CLIENT_ID + "&client_secret=" + CLIENT_SECRET + "&code=" + code + "redirect_uri=http://varunagrawal.github.io/commitsong/", false);
+var githubAPI = "https://api.github.com"
 
-    xhr.setRequestHeader("Origin", "https://varunagrawal.github.io/commitsong/");
-    xhr.send();
-    
-    var arr = xhr.responseText;
-    var res = $.map( arr, function(n, i){
-	return n.split("=");
-    });
+function getRepos(username, onSuccess, onError){
+    request(githubAPI + "/users/" + username + "/repos", 'GET', {}, onSuccess, onError);
+}
 
-    var result = null;
-    for(var i=0; i<res.length; i++){
-	if(res[i] == "code"){
-	    result = res[i+1];
-	}
-    }
-    
-    return result;*/
+function getCommits(username, repo, onSuccess, onError){
+    request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {}, onSuccess, onError);
 }

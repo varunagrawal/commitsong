@@ -1,9 +1,8 @@
 function request(url, type, data, onSuccess, onError, contentType){
 
-    if(contentType === undefined){
-	contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
-    }
-    else if(contentType == 'application/json'){
+    var contentType = contentType || 'application/x-www-form-urlencoded; charset=UTF-8';
+    
+    if(contentType == 'application/json'){
 	data = JSON.stringify(data);
     }
 
@@ -11,13 +10,8 @@ function request(url, type, data, onSuccess, onError, contentType){
 	type: type,
 	url: url,
 	headers: { 'Accept': 'application/vnd.github.v3+json', 
-		   'Origin': 'http://www.varunagrawal.me',
-		   'Access-Control-Allow-Origin': 'http://www.varunagrawal.me'
+		   'Origin': 'http://www.varunagrawal.github.io'
 		 },
-	/*beforeSend: function(xhr){
-	    xhr.setRequestHeader('Origin', 'http://www.varunagrawal.me');
-	    xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
-	},*/
 	crossDomain: true,
 	contentType: contentType,
 	data: data,
@@ -46,7 +40,25 @@ function getQueryStringParameters(){
     return result;
 }
 
-var state = getNonce();
+function getClientID(){
+    var CLIENT_ID = "b0cdce6d049d97e8d1b3";
+    return CLIENT_ID;
+}
+
+function getClientSecret(){
+    var CLIENT_SECRET = "109e825552093e60fab8810fd59c8855d4740bfa";
+    TOKEN = null;
+    return CLIENT_SECRET;
+}
+
+function getAccessToken(){
+    return null;
+}
+
+
+/***
+  Not needed
+
 function login(){
 
     var redirect_uri = "http://www.varunagrawal.me/commitsong/index.html";
@@ -88,18 +100,4 @@ function getNonce(){
     
     return randomstring;
 }
-
-function getClientID(){
-    var CLIENT_ID = "b0cdce6d049d97e8d1b3";
-    return CLIENT_ID;
-}
-
-function getClientSecret(){
-    var CLIENT_SECRET = "109e825552093e60fab8810fd59c8855d4740bfa";
-    TOKEN = null;
-    return CLIENT_SECRET;
-}
-
-function getAccessToken(){
-    return null;
-}
+*/
