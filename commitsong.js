@@ -5,7 +5,7 @@ $( document ).ready( function(){
 
     alert(size);
 
-    getRepos('varunagrawal', commits(commitData), errorMessage);
+    //getRepos('varunagrawal', commits(commitData), errorMessage);
     //displayRepos("Varun");
 
 });
@@ -17,7 +17,6 @@ function commits(commitData){
 
 	var user = 'varunagrawal';
 	for(var i=0; i< repodata.length; i++){
-	    //alert(data[i].name);
 	    getCommits(user, repodata[i].name, display(commitData), errorMessage, moment().subtract(1, 'years').format());//'2013-09-17T01:09:12+05:30');
 	  
 	}
@@ -31,13 +30,11 @@ function display(commitData){
 	var oneYearAgo = moment().subtract(1, 'years'); 
 	
 	var size = now.diff(oneYearAgo, 'days');
-	//commitData = commitData || getYearArray(size);
 	
 	for(var i=0; i<data.length; i++){
 	    
 	    var commitDate = moment(data[i].commit.committer.date);
 	    if(commitDate.isBefore(now) && commitDate.isAfter(oneYearAgo)){
-		//alert(commitDate.diff(oneYearAgo, 'days'));
 		commitData[commitDate.diff(oneYearAgo, 'days')] += 1;
 	    }
 	    
@@ -68,3 +65,6 @@ function getYearArray(size){
 
     return arr;
 }
+
+
+var sampleData = [2,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,2,0,4,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,1,0,5,0,0,0,2,0,2,0,0,8,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,5,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,6,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,3,1,2,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,21,4,1,4,0];
