@@ -1,26 +1,30 @@
 $( document ).ready( function(){
     
-    var size = moment().diff(moment().subtract(1, 'years'), 'days');
-	
+    var size = moment().diff(moment().subtract(1, 'years').subtract(1, 'days'), 'days');
     var commitData = getYearArray(size);
+
+    alert(size);
 
     getRepos('varunagrawal', commits(commitData), errorMessage);
     //displayRepos("Varun");
 
 });
 
-var commits = function(commitData){ 
-    return function(data){
-	getCommits('varunagrawal', 'ShowOfHands', display(commitData), errorMessage, 'varunagrawal', '2013-09-17T01:09:12+05:30');
-	getCommits('varunagrawal', 'Novella', display(commitData), errorMessage, 'varunagrawal', '2013-09-17T01:09:12+05:30');
-	/*for(var i=0; i< data.length; i++){
-	  alert(data[i].name);
+function commits(commitData){ 
+    return function(repodata){
+	//getCommits('varunagrawal', 'commitsong', display(commitData), errorMessage, '2014-09-15T01:09:12+05:30');
+	//getCommits('varunagrawal', 'Novella', display(commitData), errorMessage, '2013-09-17T01:09:12+05:30');
+
+	var user = 'varunagrawal';
+	for(var i=0; i< repodata.length; i++){
+	    //alert(data[i].name);
+	    getCommits(user, repodata[i].name, display(commitData), errorMessage, moment().subtract(1, 'years').format());//'2013-09-17T01:09:12+05:30');
 	  
-	}*/
+	}
     }
 }
 
-var display = function(commitData){
+function display(commitData){
     return function(data){
 	
 	var now = moment();
@@ -53,8 +57,8 @@ function getRepos(username, onSuccess, onError){
     request(githubAPI + "/users/" + username + "/repos", 'GET', {}, onSuccess, onError);
 }
 
-function getCommits(username, repo, onSuccess, onError, author, since){
-    request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {author: author, since: since}, onSuccess, onError);
+function getCommits(username, repo, onSuccess, onError, since){
+    request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {author: username, since: since}, onSuccess, onError);
 }
 
 
