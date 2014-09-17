@@ -40,64 +40,13 @@ function getQueryStringParameters(){
     return result;
 }
 
-function getClientID(){
-    var CLIENT_ID = "b0cdce6d049d97e8d1b3";
-    return CLIENT_ID;
+function loadMIDI(){
+
+    MIDI.loadPlugin({
+	soundfontUrl: "./MIDI.js/soundfont/",
+	instrument: "distortion_guitar",
+	callback: function(){
+	}
+    });
+
 }
-
-function getClientSecret(){
-    var CLIENT_SECRET = "109e825552093e60fab8810fd59c8855d4740bfa";
-    TOKEN = null;
-    return CLIENT_SECRET;
-}
-
-function getAccessToken(){
-    return null;
-}
-
-
-/***
-  Not needed
-
-function login(){
-
-    var redirect_uri = "http://www.varunagrawal.me/commitsong/index.html";
-
-    window.location.replace("https://github.com/login/oauth/authorize?client_id=" + getClientID() + "&redirect_uri=" + redirect_uri + "&scope=user,user:email,public_repo,repo:status&state=" + state);
-    
-}
-
-function authorize(){
-
-    //if(result['state'] == state)
-    var result = getQueryStringParameters();
-    
-    var url = "https://github.com/login/oauth/access_token";
-    var data = { client_id: getClientID(), client_secret: getClientSecret(), code: result.code}
-    
-    request(url, 'POST', data, onAuthorization, onError, 'application/json');
-    
-}
-
-function onAuthorization(reponseData){
-    alert("authorized");
-    alert(responseData);
-    alert(JSON.stringify(responseData));
-}
-
-function onError(jqxhr, textStatus, errorThrown){
-    alert(textStatus);
-}
-
-function getNonce(){
-    var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    var string_length = 8;
-    var randomstring = '';
-    for (var i=0; i<string_length; i++) {
-	var rnum = Math.floor(Math.random() * chars.length);
-	randomstring += chars.substring(rnum,rnum+1);
-    }
-    
-    return randomstring;
-}
-*/
