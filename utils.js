@@ -42,11 +42,11 @@ function getQueryStringParameters(){
 
 function loadMIDI(commitData, instr){
     $('#data').text("loading MIDI with instrument " + instr);
-    //alert("loading");
-    alert(JSON.stringify(MIDI.Soundfont.acoustic_grand_piano));
+
+    MIDI.loader = new widgets.Loader;
        
-    /*MIDI.loadPlugin({
-	soundfontUrl: "MIDI.js/soundfont/",
+    MIDI.loadPlugin({
+	soundfontUrl: "./MIDI.js/soundfont/",
 	instrument: instr,
 	callback: function(){
 	    alert("Yes");
