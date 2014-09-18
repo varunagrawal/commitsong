@@ -1,5 +1,7 @@
 $( document ).ready( function(){
     
+    loadMIDI([], "acoustic_grand_piano");
+    
     var size = moment().diff(moment().subtract(1, 'years').subtract(1, 'days'), 'days');
     var commitData = getYearArray(size);
 

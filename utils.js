@@ -40,13 +40,32 @@ function getQueryStringParameters(){
     return result;
 }
 
-function loadMIDI(){
-
-    MIDI.loadPlugin({
-	soundfontUrl: "./MIDI.js/soundfont/",
-	instrument: "distortion_guitar",
+function loadMIDI(commitData, instr){
+    $('#data').text("loading MIDI with instrument " + instr);
+    //alert("loading");
+    alert(JSON.stringify(MIDI.Soundfont.acoustic_grand_piano));
+       
+    /*MIDI.loadPlugin({
+	soundfontUrl: "MIDI.js/soundfont/",
+	instrument: instr,
 	callback: function(){
+	    alert("Yes");
+	    $('#data').text("loaded MIDI");
+	    MIDI.loader.stop();
+	    play();
 	}
-    });
+    });*/
 
+}
+
+function play(){
+    alert("playing note!");
+    
+    MIDI.programChange(0, 0);
+    MIDI.noteOn(0, 60, 127);
+    MIDI.noteOff(0, 60, 2);
+    /*setTimeout(function(){
+	MIDI.noteOff(0, 74, 0);
+	alert("done");
+    }, 250);*/
 }
