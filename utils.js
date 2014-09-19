@@ -49,7 +49,7 @@ function loadMIDI(commitData, instr){
 	soundfontUrl: "./MIDI.js/soundfont/",
 	instrument: instr,
 	callback: function(){
-	    alert("Yes");
+
 	    $('#data').text("loaded MIDI");
 	    MIDI.loader.stop();
 	    play();
@@ -59,11 +59,13 @@ function loadMIDI(commitData, instr){
 }
 
 function play(){
-    alert("playing note!");
     
     MIDI.programChange(0, 0);
     MIDI.noteOn(0, 60, 127);
     MIDI.noteOff(0, 60, 2);
+    MIDI.noteOn(0, 70, 127, 1);
+    MIDI.noteOff(0, 70, 2);
+
     /*setTimeout(function(){
 	MIDI.noteOff(0, 74, 0);
 	alert("done");
