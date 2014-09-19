@@ -54,7 +54,7 @@ function loadMIDI(commitData, instr){
 	    MIDI.loader.stop();
 	    play();
 	}
-    });*/
+    });
 
 }
 
