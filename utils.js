@@ -40,28 +40,54 @@ function getQueryStringParameters(){
     return result;
 }
 
-function loadMIDI(commitData, instr){
+function loadMIDI(commitData, instruments){
     $('#data').text("loading MIDI with instrument " + instr);
 
-    MIDI.loader = new widgets.Loader;
+    MIDI.loader = new widgets.Loader("Setting up the mix!!");
        
     MIDI.loadPlugin({
 	soundfontUrl: "./MIDI.js/soundfont/",
 	instrument: instr,
-	callback: function(){
-
-	    $('#data').text("loaded MIDI");
-	    MIDI.loader.stop();
-	    play();
-	}
+	callback: startPlaying(commitData)
     });
 
 }
 
-function play(){
-    
-    MIDI.programChange(0, 0);
-    MIDI.noteOn(0, 60, 127);
+function startPlaying(commitData){
+    return function(){
+	$('#data').text("loaded MIDI");
+	var notes = scaleData(commitData);
+	MIDI.loader.stop();
+	play(notes);
+
+    }
+}
+
+function scale(commitData){
+    alert(commitData);
+
+    var min = commitData[0], max = commitData[0];
+    for(var i=0; i<commitData.length; i++){
+	if(min > commitData[i])
+	    min = commitData[i];
+	if(max < commitData[i])
+	    max = commitData[i];
+    }
+
+    var notes = commitData;
+    for(var i=0; i<notes.length; i++){
+	// 108 - 21 is the range of MIDI notes.
+	notes[i] = (108-21) * commitData / (max - min);
+    }
+
+    return notes;
+}
+
+function play(notes){
+    //MIDI.programChange(0, 0);
+    MIDI.setVolume(0, 127);
+
+    MIDI.noteOn(0, 60, 127, 2);
     MIDI.noteOff(0, 60, 2);
     MIDI.noteOn(0, 70, 127, 1);
     MIDI.noteOff(0, 70, 2);
