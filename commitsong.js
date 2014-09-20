@@ -90,7 +90,7 @@ function play(notes){
     var velocity = 127;
 
     for(var i=0; i<notes.length; i++){
-	var delay = i / 4;
+	var delay = i / 2;
 
 	MIDI.noteOn(0, notes[i], velocity, delay);
 	//MIDI.noteOff(0, notes[i], delay);
