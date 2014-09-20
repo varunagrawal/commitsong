@@ -1,6 +1,6 @@
 $( document ).ready( function(){
     
-    loadMIDI([], "acoustic_grand_piano");
+    loadMIDI(sampleData, ["acoustic_grand_piano"]);
     
     var size = moment().diff(moment().subtract(1, 'years').subtract(1, 'days'), 'days');
     var commitData = getYearArray(size);
@@ -67,7 +67,7 @@ function loadMIDI(commitData, instruments){
        
     MIDI.loadPlugin({
 	soundfontUrl: "./MIDI.js/soundfont/",
-	instrument: instr,
+	instrument: instruments,
 	callback: startPlaying(commitData)
     });
 
@@ -92,7 +92,7 @@ function play(notes){
     var delay = 1.0;
 
     for(var i=0; i<notes.length; i++){
-	MIDI.noteOn(0, notes[i], velocity, 0);
+	MIDI.noteOn(0, notes[i], velocity);
 	MIDI.noteOff(0, notes[i], delay);
     }
 
