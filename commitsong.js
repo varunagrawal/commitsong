@@ -61,7 +61,7 @@ function getCommits(username, repo, onSuccess, onError, since){
 }
 
 function loadMIDI(commitData, instruments){
-    $('#data').text("loading MIDI with instrument " + instr);
+    $('#data').text("loading MIDI with instrument " + instruments);
 
     MIDI.loader = new widgets.Loader("Setting up the mix!!");
        
