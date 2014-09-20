@@ -88,11 +88,12 @@ function play(notes){
     //MIDI.programChange(0, 0);
     MIDI.setVolume(0, 127);
     var velocity = 127;
-    var delay = 2;
 
     for(var i=0; i<notes.length; i++){
-	MIDI.noteOn(0, notes[i], velocity);
-	MIDI.noteOff(0, notes[i], delay);
+	var delay = i / 4;
+
+	MIDI.noteOn(0, notes[i], velocity, delay);
+	//MIDI.noteOff(0, notes[i], delay);
     }
 
     alert("done");
