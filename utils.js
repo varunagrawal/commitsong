@@ -90,9 +90,9 @@ function play(notes){
     var velocity = 127;
     var delay = 1.0;
 
-    for(let note of notes){    // foreach loop in JS
-	MIDI.noteOn(0, note, velocity, 0);
-	MIDI.noteOff(0, note, delay);
+    for(var i=0; i<notes.length; i++){
+	MIDI.noteOn(0, notes[i], velocity, 0);
+	MIDI.noteOff(0, notes[i], delay);
     }
 
     /*setTimeout(function(){
