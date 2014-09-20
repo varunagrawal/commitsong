@@ -77,20 +77,23 @@ function scale(commitData){
     var notes = commitData;
     for(var i=0; i<notes.length; i++){
 	// 108 - 21 is the range of MIDI notes.
-	notes[i] = (108-21) * commitData / (max - min);
+	notes[i] = parseInt( (108-21) * commitData / (max - min) );
     }
 
     return notes;
 }
 
 function play(notes){
+
     //MIDI.programChange(0, 0);
     MIDI.setVolume(0, 127);
+    var velocity = 127;
+    var delay = 1.0;
 
-    MIDI.noteOn(0, 60, 127, 2);
-    MIDI.noteOff(0, 60, 2);
-    MIDI.noteOn(0, 70, 127, 1);
-    MIDI.noteOff(0, 70, 2);
+    for(let note of notes){    // foreach loop in JS
+	MIDI.noteOn(0, note, velocity, 0);
+	MIDI.noteOff(0, note, delay);
+    }
 
     /*setTimeout(function(){
 	MIDI.noteOff(0, 74, 0);
