@@ -86,15 +86,19 @@ function startPlaying(commitData){
 
 function play(notes){
 
+    $('#data').text("Playing!!!");
+    alert(notes[0]);
     //MIDI.programChange(0, 0);
     MIDI.setVolume(0, 127);
     var velocity = 127;
-    var delay = 1.0;
+    var delay = 2;
 
     for(var i=0; i<notes.length; i++){
 	MIDI.noteOn(0, notes[i], velocity);
 	MIDI.noteOff(0, notes[i], delay);
     }
+
+    alert("done");
 
     /*setTimeout(function(){
 	MIDI.noteOff(0, 74, 0);

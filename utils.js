@@ -42,7 +42,6 @@ function getQueryStringParameters(){
 
 
 function scale(commitData){
-    alert(commitData);
 
     var min = commitData[0], max = commitData[0];
     for(var i=0; i<commitData.length; i++){
@@ -55,7 +54,7 @@ function scale(commitData){
     var notes = commitData;
     for(var i=0; i<notes.length; i++){
 	// 108 - 21 is the range of MIDI notes.
-	notes[i] = parseInt( (108-21) * commitData / (max - min) );
+	notes[i] = parseInt( (108-21) * (commitData - min) / (max - min) );
     }
 
     return notes;
