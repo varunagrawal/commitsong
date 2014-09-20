@@ -76,7 +76,7 @@ function loadMIDI(commitData, instruments){
 function startPlaying(commitData){
     return function(){
 	$('#data').text("loaded MIDI");
-	var notes = scaleData(commitData);
+	var notes = scale(commitData);
 	MIDI.loader.stop();
 	play(notes);
 
