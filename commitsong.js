@@ -13,8 +13,6 @@ $( document ).ready( function(){
 
 function commits(commitData){ 
     return function(repodata){
-	//getCommits('varunagrawal', 'commitsong', display(commitData), errorMessage, '2014-09-15T01:09:12+05:30');
-	//getCommits('varunagrawal', 'Novella', display(commitData), errorMessage, '2013-09-17T01:09:12+05:30');
 
 	var user = 'varunagrawal';
 	for(var i=0; i< repodata.length; i++){
@@ -90,10 +88,10 @@ function play(notes){
     var velocity = 127;
 
     for(var i=0; i<notes.length; i++){
-	var delay = i / 2;
+	var delay = i / 4;
 
 	MIDI.noteOn(0, notes[i], velocity, delay);
-	//MIDI.noteOff(0, notes[i], delay);
+	MIDI.noteOff(0, notes[i], delay);
 	
 	$('#data').text("Playing note: " + i);
     }
