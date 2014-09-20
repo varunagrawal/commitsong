@@ -50,11 +50,14 @@ function scale(commitData){
 	if(max < commitData[i])
 	    max = commitData[i];
     }
-
+    
     var notes = commitData;
     for(var i=0; i<notes.length; i++){
+
 	// 108 - 21 is the range of MIDI notes.
-	notes[i] = parseInt( (108-21) * (commitData - min) / (max - min) );
+	notes[i] = ((108-21) * (commitData[i] - min) / (max - min)) + 21;
+
+	notes[i] = notes[i] | 0;    // Shortcut to get int from double
     }
 
     return notes;

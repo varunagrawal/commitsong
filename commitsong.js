@@ -1,12 +1,11 @@
 $( document ).ready( function(){
-    
+
+    MIDI.loader = new widgets.Loader("Setting up the mix!!");
+
+    //var notes = scale(sampleData);
+    //$('#data').text(notes);
     loadMIDI(sampleData, ["acoustic_grand_piano"]);
     
-    var size = moment().diff(moment().subtract(1, 'years').subtract(1, 'days'), 'days');
-    var commitData = getYearArray(size);
-
-    alert(size);
-
     //getRepos('varunagrawal', commits(commitData), errorMessage);
     //displayRepos("Varun");
 
@@ -62,8 +61,6 @@ function getCommits(username, repo, onSuccess, onError, since){
 
 function loadMIDI(commitData, instruments){
     $('#data').text("loading MIDI with instrument " + instruments);
-
-    MIDI.loader = new widgets.Loader("Setting up the mix!!");
        
     MIDI.loadPlugin({
 	soundfontUrl: "./MIDI.js/soundfont/",
@@ -87,7 +84,7 @@ function startPlaying(commitData){
 function play(notes){
 
     $('#data').text("Playing!!!");
-    alert(notes[0]);
+
     //MIDI.programChange(0, 0);
     MIDI.setVolume(0, 127);
     var velocity = 127;
