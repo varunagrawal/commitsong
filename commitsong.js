@@ -39,7 +39,7 @@ function display(commitData){
 	    
 	}
 	
-	$('#data').text(commitData);
+	notification(commitData);
     }
 }
 
@@ -58,7 +58,7 @@ function getCommits(username, repo, onSuccess, onError, since){
 }
 
 function loadMIDI(commitData, instruments){
-    $('#data').text("loading MIDI with instrument " + instruments);
+    notification("loading MIDI with instrument " + instruments);
        
     MIDI.loadPlugin({
 	soundfontUrl: "./MIDI.js/soundfont/",
@@ -70,7 +70,9 @@ function loadMIDI(commitData, instruments){
 
 function startPlaying(commitData){
     return function(){
-	$('#data').text("loaded MIDI");
+
+	notification("loaded MIDI");
+
 	var notes = scale(commitData);
 	MIDI.loader.stop();
 	play(notes);
@@ -81,7 +83,7 @@ function startPlaying(commitData){
 
 function play(notes){
 
-    $('#data').text("Playing!!!");
+    notification("Playing!!!");
 
     //MIDI.programChange(0, 0);
     MIDI.setVolume(0, 127);
@@ -92,11 +94,7 @@ function play(notes){
 
 	MIDI.noteOn(0, notes[i], velocity, delay);
 	MIDI.noteOff(0, notes[i], delay);
-	
-	$('#data').text("Playing note: " + i);
     }
-
-    alert("done");
 
     /*setTimeout(function(){
 	MIDI.noteOff(0, 74, 0);

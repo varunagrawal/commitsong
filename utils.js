@@ -50,7 +50,12 @@ function scale(commitData){
 	if(max < commitData[i])
 	    max = commitData[i];
     }
-    
+
+    if(max == min)
+    {
+	max = min + 1;
+    }
+
     var notes = commitData;
     for(var i=0; i<notes.length; i++){
 
@@ -68,4 +73,8 @@ function getYearArray(size){
     for(var i=0; i<size; i++) arr[i] = 0;
 
     return arr;
+}
+
+function notification(value){
+    $('#data').text(value);
 }
