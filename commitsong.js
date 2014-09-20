@@ -94,6 +94,8 @@ function play(notes){
 
 	MIDI.noteOn(0, notes[i], velocity, delay);
 	//MIDI.noteOff(0, notes[i], delay);
+	
+	$('#data').text("Playing note: " + i);
     }
 
     alert("done");
