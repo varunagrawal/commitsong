@@ -40,28 +40,6 @@ function getQueryStringParameters(){
     return result;
 }
 
-function loadMIDI(commitData, instruments){
-    $('#data').text("loading MIDI with instrument " + instr);
-
-    MIDI.loader = new widgets.Loader("Setting up the mix!!");
-       
-    MIDI.loadPlugin({
-	soundfontUrl: "./MIDI.js/soundfont/",
-	instrument: instr,
-	callback: startPlaying(commitData)
-    });
-
-}
-
-function startPlaying(commitData){
-    return function(){
-	$('#data').text("loaded MIDI");
-	var notes = scaleData(commitData);
-	MIDI.loader.stop();
-	play(notes);
-
-    }
-}
 
 function scale(commitData){
     alert(commitData);
@@ -83,20 +61,9 @@ function scale(commitData){
     return notes;
 }
 
-function play(notes){
+function getYearArray(size){
+    var arr = []
+    for(var i=0; i<size; i++) arr[i] = 0;
 
-    //MIDI.programChange(0, 0);
-    MIDI.setVolume(0, 127);
-    var velocity = 127;
-    var delay = 1.0;
-
-    for(var i=0; i<notes.length; i++){
-	MIDI.noteOn(0, notes[i], velocity, 0);
-	MIDI.noteOff(0, notes[i], delay);
-    }
-
-    /*setTimeout(function(){
-	MIDI.noteOff(0, 74, 0);
-	alert("done");
-    }, 250);*/
+    return arr;
 }

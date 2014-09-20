@@ -60,12 +60,46 @@ function getCommits(username, repo, onSuccess, onError, since){
     request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {author: username, since: since}, onSuccess, onError);
 }
 
+function loadMIDI(commitData, instruments){
+    $('#data').text("loading MIDI with instrument " + instr);
 
-function getYearArray(size){
-    var arr = []
-    for(var i=0; i<size; i++) arr[i] = 0;
+    MIDI.loader = new widgets.Loader("Setting up the mix!!");
+       
+    MIDI.loadPlugin({
+	soundfontUrl: "./MIDI.js/soundfont/",
+	instrument: instr,
+	callback: startPlaying(commitData)
+    });
 
-    return arr;
+}
+
+function startPlaying(commitData){
+    return function(){
+	$('#data').text("loaded MIDI");
+	var notes = scaleData(commitData);
+	MIDI.loader.stop();
+	play(notes);
+
+    }
+}
+
+
+function play(notes){
+
+    //MIDI.programChange(0, 0);
+    MIDI.setVolume(0, 127);
+    var velocity = 127;
+    var delay = 1.0;
+
+    for(var i=0; i<notes.length; i++){
+	MIDI.noteOn(0, notes[i], velocity, 0);
+	MIDI.noteOff(0, notes[i], delay);
+    }
+
+    /*setTimeout(function(){
+	MIDI.noteOff(0, 74, 0);
+	alert("done");
+    }, 250);*/
 }
 
 
