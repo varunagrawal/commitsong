@@ -5,8 +5,16 @@ $( document ).ready( function(){
     //var notes = scale(sampleData);
     //$('#data').text(notes);
     //loadMIDI(sampleData, ["acoustic_grand_piano"]);
+
+    var oneYearAgo = moment().subtract(1, 'years');
+    oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);  // date one year ago with time as midnight
     
-    var size = moment().diff(moment().subtract(1, 'years')-1, 'days');
+    var now = moment();
+    var today = moment([now.year(), now.month(), now.date()]); // today's date with time as midnight
+    
+    var size = today.diff(oneYearAgo, 'days');
+    //var size = moment().diff(moment().subtract(1, 'years').subtract(1, 'days');
+
     var commitData = getYearArray(size);
 
     var user = $('#username').text(); 
@@ -22,8 +30,11 @@ function commits(user, commitData, onSuccess){
 	    notification("Invalid Github Id.");
 	else{
 	    
+	    var oneYearAgo = moment().subtract(1, 'years');
+	    oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
+	    
 	    for(var i=0; i< repodata.length; i++){
-		getCommits(user, repodata[i].name, onSuccess(commitData), errorMessage, moment().subtract(1, 'years').subtract(1, 'days').format());
+		getCommits(user, repodata[i].name, onSuccess(commitData), errorMessage, oneYearAgo.format());
 		//'2013-09-17T01:09:12+05:30'
 	    }
 	}
@@ -33,17 +44,32 @@ function commits(user, commitData, onSuccess){
 function display(commitData){
     return function(data){
 	
-	var now = moment();
-	var oneYearAgo = moment.utc().subtract(1, 'years').subtract(1, 'days'); 
-	
-	var size = now.diff(oneYearAgo, 'days');
-	
+	var now = moment();    // current moment in datetime
+	var oneYearAgo = moment().subtract(1, 'years');    // datetime one year ago
+	oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);    // midnight one year ago. Midnight will be the standard time for comparison
+	//var day = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
+	//var previousDay = day;
+	//previousDay.subtract(1, 'days'); 
+
+	//var today = moment([now.year(), now.month(), now.date()]);
+
+	//var size = today.diff(oneYearAgo, 'days');
+
 	for(var i=0; i<data.length; i++){
 	    
-	    var commitDate = moment.utc(data[i].commit.committer.date);
-	    //if(commitDate.isBefore(now) && commitDate.isAfter(oneYearAgo)){
-		commitData[commitDate.diff(oneYearAgo, 'days')] += 1;
-	    //}
+	    var commitDate = moment(data[i].commit.committer.date);
+	    commitDate = moment([commitDate.year(), commitDate.month(), commitDate.date()]); // commit date with time as midnight of that date
+	
+	    // get number of days since commitDate and oneYearAgo with both dates having time as midnight. -1 is for array indexing.
+	    commitData[commitDate.diff(oneYearAgo, 'days')-1] += 1;
+
+	    /*
+	    if(commitDate.isBefore(day) && commitDate.isAfter(previousDay)){
+		commitData[day.diff(oneYearAgo, 'days')] += 1;
+
+		previousDay.add(1, 'days');
+		day.add(1, 'days');
+	    }*/
 	    
 	}
 	
