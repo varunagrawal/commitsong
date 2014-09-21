@@ -17,7 +17,8 @@ function request(url, type, data, onSuccess, onError, contentType){
 	data: data,
 	dataType: 'json',
 	statusCode: {
-	    404: function(){alert("Not found")},
+	    403: forbidden,
+	    404: function(){alert("Not found")}
 	},
 	error: onError,
 	success: onSuccess
@@ -77,4 +78,9 @@ function getYearArray(size){
 
 function notification(value){
     $('#data').text(value);
+}
+
+
+function forbidden(){
+    notification("Rate limit exceeded!\nPlease wait for a while and try again.");
 }
