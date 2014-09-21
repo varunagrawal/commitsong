@@ -131,7 +131,8 @@ function play(notes){
     notification("Playing!!!");
 
     //MIDI.programChange(0, 0);
-    MIDI.setVolume(0, 127);
+    //MIDI.setVolume(0, 127);
+
     var velocity = 127;
 
     for(var i=0; i<notes.length; i++){
