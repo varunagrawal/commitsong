@@ -2,12 +2,12 @@ $( document ).ready( function(){
 
     MIDI.loader = new widgets.Loader("Setting up the mix!!");
 
-    var notes = scale(sampleData);
+    //var notes = scale(sampleData);
     //$('#data').text(notes);
-    loadMIDI(sampleData, ["acoustic_grand_piano"]);
+    //loadMIDI(sampleData, ["acoustic_grand_piano"]);
 
     var user = $('#username').text(); 
-    //getRepos(user, repos, errorMessage);
+    getRepos(user, repos, errorMessage);
 
 });
 
