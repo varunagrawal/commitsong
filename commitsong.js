@@ -1,11 +1,40 @@
 $( document ).ready( function(){
 
-    //MIDI.loader = new widgets.Loader("Setting up the mix!!");
+    MIDI.loader = new widgets.Loader("Setting up the mix!!");
 
     //var notes = scale(sampleData);
     //$('#data').text(notes);
     //loadMIDI(sampleData, ["acoustic_grand_piano"]);
 
+    var user = $('#username').text(); 
+    getRepos(user, repos, errorMessage);
+
+});
+
+function repos(repodata){ 
+
+    var user = $('#username').text(); 
+
+    if(repodata.length == 0 && "message" in repodata)
+	notification("Invalid Github Id.");
+    else{
+	
+	var oneYearAgo = moment().subtract(1, 'years');
+	oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
+	
+	var commitData = createCommitArray();
+
+	for(var i=0; i< repodata.length; i++){
+	    getCommits(user, repodata[i].name, loadCommits(commitData), errorMessage, oneYearAgo.format());
+	    
+	    //getCommits(user, repodata[i].name, display(commitData), errorMessage, oneYearAgo.format());
+	    //'2013-09-17T01:09:12+05:30'
+	}
+
+    }
+}
+
+function createCommitArray(){
     var oneYearAgo = moment().subtract(1, 'years');
     oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);  // date one year ago with time as midnight
     
@@ -17,28 +46,7 @@ $( document ).ready( function(){
 
     var commitData = getYearArray(size);
 
-    var user = $('#username').text(); 
-    getRepos(user, commits(user, commitData, display), errorMessage);
-    //commits($('#username').text())
-
-});
-
-function commits(user, commitData, onSuccess){ 
-    return function(repodata){
-
-	if(repodata.length == 0 && "message" in repodata)
-	    notification("Invalid Github Id.");
-	else{
-	    
-	    var oneYearAgo = moment().subtract(1, 'years');
-	    oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
-	    
-	    for(var i=0; i< repodata.length; i++){
-		getCommits(user, repodata[i].name, onSuccess(commitData), errorMessage, oneYearAgo.format());
-		//'2013-09-17T01:09:12+05:30'
-	    }
-	}
-    }
+    return commitData;
 }
 
 function display(commitData){
@@ -77,46 +85,49 @@ function display(commitData){
     }
 }
 
-function errorMessage(){
-    alert("Worst error message ever!!");
+
+function loadCommits(commitData){
+    return function(data){
+	
+	var now = moment();    // current moment in datetime
+	var oneYearAgo = moment().subtract(1, 'years');    // datetime one year ago
+	oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);    // midnight one year ago. Midnight will be the standard time for comparison
+
+	for(var i=0; i<data.length; i++){
+	    
+	    var commitDate = moment(data[i].commit.committer.date);
+	    commitDate = moment([commitDate.year(), commitDate.month(), commitDate.date()]); // commit date with time as midnight of that date
+	
+	    // get number of days since commitDate and oneYearAgo with both dates having time as midnight. -1 is for array indexing.
+	    commitData[commitDate.diff(oneYearAgo, 'days')-1] += 1;
+	}
+	
+	var notes = scale(commitData);
+	startPlaying(notes);
+
+    }
 }
 
-var githubAPI = "https://api.github.com"
-
-function getRepos(username, onSuccess, onError){
-    request(githubAPI + "/users/" + username + "/repos", 'GET', {}, onSuccess, onError);
+function startPlaying(notes){
+    loadMIDI(notes, ["acoustic_grand_piano"]);
 }
 
-function getCommits(username, repo, onSuccess, onError, since){
-    request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {author: username, since: since, per_page:200}, onSuccess, onError);
-}
+function loadMIDI(notes, instruments){
 
-function loadMIDI(commitData, instruments){
     notification("loading MIDI with instrument " + instruments);
        
     MIDI.loadPlugin({
 	soundfontUrl: "./MIDI.js/soundfont/",
 	instrument: instruments,
-	callback: startPlaying(commitData)
+	callback: play(notes)
     });
 
 }
 
-function startPlaying(commitData){
-    return function(){
-
-	notification("loaded MIDI");
-
-	var notes = scale(commitData);
-	MIDI.loader.stop();
-	play(notes);
-
-    }
-}
-
-
 function play(notes){
-
+    
+    MIDI.loader.stop();
+    
     notification("Playing!!!");
 
     //MIDI.programChange(0, 0);
@@ -135,6 +146,21 @@ function play(notes){
 	alert("done");
     }, 250);*/
 }
+
+function errorMessage(){
+    alert("Worst error message ever!!");
+}
+
+var githubAPI = "https://api.github.com"
+
+function getRepos(username, onSuccess, onError){
+    request(githubAPI + "/users/" + username + "/repos", 'GET', {}, onSuccess, onError);
+}
+
+function getCommits(username, repo, onSuccess, onError, since){
+    request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {author: username, since: since, per_page:200}, onSuccess, onError);
+}
+
 
 
 var sampleData = [2,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,2,0,4,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,1,0,5,0,0,0,2,0,2,0,0,8,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,5,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,6,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,3,1,2,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,21,4,1,4,0];
