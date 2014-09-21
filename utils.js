@@ -42,14 +42,14 @@ function getQueryStringParameters(){
 }
 
 
-function scale(commitData){
+function scale(data){
 
-    var min = commitData[0], max = commitData[0];
-    for(var i=0; i<commitData.length; i++){
-	if(min > commitData[i])
-	    min = commitData[i];
-	if(max < commitData[i])
-	    max = commitData[i];
+    var min = data[0], max = data[0];
+    for(var i=0; i<data.length; i++){
+	if(min > data[i])
+	    min = data[i];
+	if(max < data[i])
+	    max = data[i];
     }
 
     if(max == min)
@@ -57,11 +57,11 @@ function scale(commitData){
 	max = min + 1;
     }
 
-    var notes = commitData;
+    var notes = new Array(data.length);
     for(var i=0; i<notes.length; i++){
 
 	// 108 - 21 is the range of MIDI notes.
-	notes[i] = ((108-21) * (commitData[i] - min) / (max - min)) + 21;
+	notes[i] = ((108-21) * (data[i] - min) / (max - min)) + 21;
 
 	notes[i] = notes[i] | 0;    // Shortcut to get int from double
     }
