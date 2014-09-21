@@ -2,12 +2,12 @@ $( document ).ready( function(){
 
     MIDI.loader = new widgets.Loader("Setting up the mix!!");
 
-    //var notes = scale(sampleData);
+    var notes = scale(sampleData);
     //$('#data').text(notes);
-    //loadMIDI(sampleData, ["acoustic_grand_piano"]);
+    loadMIDI(sampleData, ["acoustic_grand_piano"]);
 
     var user = $('#username').text(); 
-    getRepos(user, repos, errorMessage);
+    //getRepos(user, repos, errorMessage);
 
 });
 
@@ -23,14 +23,20 @@ function repos(repodata){
 	oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
 	
 	var commitData = createCommitArray();
+	var last = false;
+	
+	for(var i=0; i<repodata.length; i++){
 
-	for(var i=0; i< repodata.length; i++){
-	    getCommits(user, repodata[i].name, loadCommits(commitData), errorMessage, oneYearAgo.format());
+	    if(i == repodata.length-1)
+		last = true;
+
+	    getCommits(user, repodata[i].name, loadCommits(commitData, last), errorMessage, oneYearAgo.format());
 	    
 	    //getCommits(user, repodata[i].name, display(commitData), errorMessage, oneYearAgo.format());
 	    //'2013-09-17T01:09:12+05:30'
 	}
-
+	
+	//notification(commitData);    
     }
 }
 
@@ -81,14 +87,14 @@ function display(commitData){
 	    
 	}
 	
-	notification(commitData);
+	//notification(commitData);
     }
 }
 
 
-function loadCommits(commitData){
+function loadCommits(commitData, last){
     return function(data){
-	
+
 	var now = moment();    // current moment in datetime
 	var oneYearAgo = moment().subtract(1, 'years');    // datetime one year ago
 	oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);    // midnight one year ago. Midnight will be the standard time for comparison
@@ -102,36 +108,47 @@ function loadCommits(commitData){
 	    commitData[commitDate.diff(oneYearAgo, 'days')-1] += 1;
 	}
 	
-	var notes = scale(commitData);
-	startPlaying(notes);
+	if(last){
+	    var instruments = getInstruments();
+	    loadMIDI(commitData, instruments);
+	}
 
     }
 }
 
-function startPlaying(notes){
-    loadMIDI(notes, ["acoustic_grand_piano"]);
+function getInstruments(){
+    return ["acoustic_grand_piano"];
 }
 
-function loadMIDI(notes, instruments){
+function startPlaying(data){
+    return function(){
+	//notification(notes);
+	var notes = scale(data);
+	play(notes);
+    }
+}
+
+function loadMIDI(data, instruments){
 
     notification("loading MIDI with instrument " + instruments);
        
     MIDI.loadPlugin({
 	soundfontUrl: "./MIDI.js/soundfont/",
 	instrument: instruments,
-	callback: play(notes)
+	callback: startPlaying(data)
     });
 
 }
 
 function play(notes){
-    
+
     MIDI.loader.stop();
-    
+
+    //notification(notes);
     notification("Playing!!!");
 
     //MIDI.programChange(0, 0);
-    //MIDI.setVolume(0, 127);
+    MIDI.setVolume(0, 127);
 
     var velocity = 127;
 

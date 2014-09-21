@@ -82,5 +82,6 @@ function notification(value){
 
 
 function forbidden(){
+    alert("forbidden");
     notification("Rate limit exceeded!\nPlease wait for a while and try again.");
 }
