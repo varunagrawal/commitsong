@@ -6,11 +6,10 @@ $( document ).ready( function(){
 
     bindEvents();
     
-
 });
 
 function bindEvents(){
-    
+    $('#play').on("click", start);
 }
 
 function start(){
