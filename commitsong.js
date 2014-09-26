@@ -139,7 +139,7 @@ function startPlaying(data){
 
 function loadMIDI(data, instruments){
 
-    notification("loading MIDI with instrument " + instruments);
+    //notification("loading MIDI with instrument " + instruments);
        
     MIDI.loadPlugin({
 	soundfontUrl: "./MIDI.js/soundfont/",
@@ -154,7 +154,7 @@ function play(notes){
     MIDI.loader.stop();
 
     //notification(notes);
-    notification("Playing!!!");
+    //notification("Playing!!!");
 
     //MIDI.programChange(0, 0);
     MIDI.setVolume(0, 127);
