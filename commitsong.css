@@ -12,7 +12,7 @@ header {
 #header {
     max-width: 380px;
     font-size: 40px;
-    color: #ffffff;
+    color: #FFFFFF;
     margin: 0 auto;
 }
 
@@ -20,6 +20,7 @@ header {
     max-width: 150px;
     margin: 20px auto;
     font-size: 20px;
+    /*text-shadow: 1px 1px 0px #aaa;*/
 }
 
 #username {

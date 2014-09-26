@@ -13,6 +13,7 @@ function bindEvents(){
 }
 
 function start(){
+    $('#start').css("display", "none");
     MIDI.loader = new widgets.Loader("Setting up the mix!!");
 
     var user = $('#username').text(); 
