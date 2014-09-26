@@ -157,7 +157,7 @@ function playNote(val, note){
 
 	showActivity(val);
 	MIDI.noteOn(0, note, velocity, 0);
-	MIDI.noteOff(0, note, 0.25);
+	MIDI.noteOff(0, note, 0.125);
 	console.log("note is " + note);
 
     }
