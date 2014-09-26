@@ -16,17 +16,22 @@ header {
     margin: 0 auto;
 }
 
+#github-info {
+	max-width: 150px;
+   margin: 20px auto;
+   text-align: center;
+}
+
 #github {
-    max-width: 150px;
-    margin: 20px auto;
     font-size: 20px;
     /*text-shadow: 1px 1px 0px #aaa;*/
 }
 
 #username {
-    max-width: 120px;
-    margin: 10px auto;
     font-size: 15px;
+    margin-top: 20px;
+    background-color: rgba(0, 0, 0, 0.6);
+    text-shadow: -1px 1px 0px #aaa;
 }
 
 #start {
