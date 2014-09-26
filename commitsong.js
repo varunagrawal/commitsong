@@ -14,7 +14,6 @@ function bindEvents(){
 
 function start(){
     $('#start').css("display", "none");
-    MIDI.loader = new widgets.Loader("Setting up the mix!!");
 
     var user = $('#username').text(); 
     getRepos(user, repos, errorMessage);
@@ -100,6 +99,9 @@ function display(commitData){
     }
 }
 
+function showActivity(val){
+    $('#activity').text(val);
+}
 
 function loadCommits(commitData, last){
     return function(data){
@@ -132,15 +134,15 @@ function getInstruments(){
 function startPlaying(data){
     return function(){
 	//notification(notes);
-	var notes = scale(data);
-	play(notes);
+	play(data);
     }
 }
 
 function loadMIDI(data, instruments){
 
     //notification("loading MIDI with instrument " + instruments);
-       
+    MIDI.loader = new widgets.Loader("Setting up the mix!!");
+
     MIDI.loadPlugin({
 	soundfontUrl: "./MIDI.js/soundfont/",
 	instrument: instruments,
@@ -149,10 +151,11 @@ function loadMIDI(data, instruments){
 
 }
 
-function play(notes){
+function play(data){
 
     MIDI.loader.stop();
 
+    var notes = scale(data);
     //notification(notes);
     //notification("Playing!!!");
 
@@ -162,10 +165,15 @@ function play(notes){
     var velocity = 127;
 
     for(var i=0; i<notes.length; i++){
-	var delay = i / 4;
+	var delay = i * 1000 / 4;    // delay is in milliseconds
 
-	MIDI.noteOn(0, notes[i], velocity, delay);
-	MIDI.noteOff(0, notes[i], delay);
+	//MIDI.noteOn(0, notes[i], velocity, delay);
+	//MIDI.noteOff(0, notes[i], delay);
+	
+	setTimeout(function(){
+	    showActivity(data[i]);
+	    MIDI.noteOn(0, notes[i], velocity, 0);
+	}, delay);
     }
 
     /*setTimeout(function(){
