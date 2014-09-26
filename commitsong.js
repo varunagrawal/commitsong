@@ -183,7 +183,7 @@ function play(data){
 	
 	console.log("delay " + delay);
 
-	setTimeout(playNote(data[i], notes[i]), delay);
+	setTimeout(playNote(data.slice(0, i+1), notes[i]), delay);
     }
 
     /*setTimeout(function(){
