@@ -165,7 +165,7 @@ function play(data){
     var velocity = 127;
 
     for(var i=0; i<notes.length; i++){
-	var delay = i * 1000 / 4;    // delay is in milliseconds
+	var delay = i * 250;    // delay is in milliseconds
 
 	//MIDI.noteOn(0, notes[i], velocity, delay);
 	//MIDI.noteOff(0, notes[i], delay);
@@ -175,6 +175,7 @@ function play(data){
 	setTimeout(function(){
 	    showActivity(data[i]);
 	    MIDI.noteOn(0, notes[i], velocity, 0);
+	    console.log("note is " + notes[i]);
 	}, delay);
     }
 
