@@ -2,6 +2,8 @@
 <html>
   <head>
     <meta charset="UTF-8"> 
+    
+    <link rel="stylesheet" type="text/css" href="commitsong.css"/>
 
     <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.min.js"></script>
     <script src="commitsong.js"></script>
@@ -24,18 +26,21 @@
 
   <body>
     <header>
-      The Commit Song
+      <div id="header">The Commit Song</div>
     </header>
 
-    <div id="github" style="display:inline;float:left">Github user:</div>
+    <div id="github">Github user:</div>
     <div id="username" contenteditable="true" >varunagrawal</div>
-    <input id="play" type="button" value="Play the song" />
-
+    <div id="start">
+      <input id="play" type="button" value="Play" />
+    </div>
     
     <div id="data" style="word-wrap:break-word"></div>
 
     <footer>
-      Created by Varun Agrawal
+      <div id="footer">
+	Created by Varun Agrawal
+      </div>
     </footer>
   </body>
 </html>

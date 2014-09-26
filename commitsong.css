@@ -1,4 +1,55 @@
+body {
+    margin-bottom: 100px;
+    height: auto;
+    font-family: segoe-ui, sans-serif, cursive;
+}
+
 header {
-    min-width: 300px;
+    background-color: #00008d;
+    width: 100%;
+}
+
+#header {
+    max-width: 380px;
+    font-size: 40px;
+    color: #ffffff;
     margin: 0 auto;
+}
+
+#github {
+    max-width: 150px;
+    margin: 20px auto;
+    font-size: 20px;
+}
+
+#username {
+    max-width: 120px;
+    margin: 10px auto;
+    font-size: 15px;
+}
+
+#start {
+    max-width: 100px;
+    margin: 50px auto;
+    text-align: center;
+}
+#play {
+    font-size: 25px;
+    float: left;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    background-color: #00008d;
+}
+
+#footer {
+    color: #ffffff;
+    font-size: 20px;
+    margin: 10px auto;
 }
