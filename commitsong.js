@@ -151,6 +151,18 @@ function loadMIDI(data, instruments){
 
 }
 
+function playNote(val, note){
+    return function(){
+	var velocity = 127;	
+
+	showActivity(val);
+	MIDI.noteOn(0, note, velocity, 0);
+	console.log("note is " + notes[i]);
+
+    }
+}
+
+
 function play(data){
 
     MIDI.loader.stop();
@@ -162,8 +174,6 @@ function play(data){
     //MIDI.programChange(0, 0);
     MIDI.setVolume(0, 127);
 
-    var velocity = 127;
-
     for(var i=0; i<notes.length; i++){
 	var delay = i * 250;    // delay is in milliseconds
 
@@ -172,11 +182,7 @@ function play(data){
 	
 	console.log("delay " + delay);
 
-	setTimeout(function(){
-	    showActivity(data[i]);
-	    MIDI.noteOn(0, notes[i], velocity, 0);
-	    console.log("note is " + notes[i]);
-	}, delay);
+	setTimeout(playNote(data[i], notes[i]), delay);
     }
 
     /*setTimeout(function(){
