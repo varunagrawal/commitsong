@@ -170,6 +170,8 @@ function play(data){
 	//MIDI.noteOn(0, notes[i], velocity, delay);
 	//MIDI.noteOff(0, notes[i], delay);
 	
+	console.log("delay " + delay);
+
 	setTimeout(function(){
 	    showActivity(data[i]);
 	    MIDI.noteOn(0, notes[i], velocity, 0);
