@@ -4,6 +4,11 @@ body {
     font-family: segoe-ui, sans-serif, cursive;
 }
 
+a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
 header {
     background-color: #333;
     width: 100%;
