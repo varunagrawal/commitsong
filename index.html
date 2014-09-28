@@ -26,15 +26,32 @@
 
   <body>
     
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
+    <!-- Facebook Share Button -->
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '293658484160509',
+          xfbml      : true,
+          version    : 'v2.1'
+        });
+      };
+      
+      (function(d, s, id){
+      var js, fjs = d.getElementsByTagName(s)[0], p=/^http:/.test(d.location)?'http':'https';
+      if (d.getElementById(id)) {return;}
       js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&appId=587441381302332&version=v2.1";
+      js.src = p+"//connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
+    
+    <!-- Twitter Tweet button -->
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    
+    <!--Social Media done -->
+
+    <div class="fb-like" data-share="true" data-width="450" data-show-faces="true"></div>
+    <a href="https://twitter.com/share" class="twitter-share-button" data-text="Play the song of your Github commits!" data-via="varagrawal" data-hashtags="commitsong">Tweet</a>
 
     <header>
       <div id="header">The Commit Song</div>
@@ -44,9 +61,7 @@
       <div id="github">Github user:</div>
       <div id="username" contenteditable="true" spellcheck="false">varunagrawal</div>
     </div>
-
-    <div class="fb-share-button" data-href="http://www.varunagrawal.me/commitsong/index.html" data-width="300"></div>
-
+    
     <div id="start">
       <input id="play" type="button" value="Play" />
     </div>
