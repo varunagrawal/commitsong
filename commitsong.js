@@ -17,8 +17,8 @@ function start(){
 
     var user = $('#username').text(); 
     
-    //MIDI.loader = new widgets.Loader("Setting up the mix!!");
-    $('#repoloading').css('display', 'block');
+    MIDI.loader = new widgets.Loader("Setting up the mix!!");
+    //$('#repoloading').css('display', 'block');
     //notification("Loading repositories!");
 
     getRepos(user, repos, errorMessage);
@@ -172,8 +172,8 @@ function playNote(val, note){
 
 function play(data){
 
-    //MIDI.loader.stop();
-    $('#repoloading').css('display', 'none');
+    MIDI.loader.stop();
+    //$('#repoloading').css('display', 'none');
 
     var notes = scale(data);
     //notification(notes);
