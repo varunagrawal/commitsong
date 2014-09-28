@@ -16,6 +16,9 @@ function start(){
     $('#start').css("display", "none");
 
     var user = $('#username').text(); 
+    
+    notification("Loading repositories!");
+
     getRepos(user, repos, errorMessage);
 }
 
@@ -120,6 +123,8 @@ function loadCommits(commitData, last){
 	}
 	
 	if(last){
+	    notification("");
+	    
 	    var instruments = getInstruments();
 	    loadMIDI(commitData, instruments);
 	}
