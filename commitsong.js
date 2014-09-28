@@ -1,7 +1,7 @@
 $( document ).ready( function(){
 
     //var notes = scale(sampleData);
-    //$('#data').text(notes);
+    //$('#activity').text(sampleData);
     //loadMIDI(sampleData, ["acoustic_grand_piano"]);
 
     bindEvents();
