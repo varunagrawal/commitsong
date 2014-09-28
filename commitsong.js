@@ -17,7 +17,9 @@ function start(){
 
     var user = $('#username').text(); 
     
-    notification("Loading repositories!");
+    //MIDI.loader = new widgets.Loader("Setting up the mix!!");
+    $('#repoloading').css('display', 'block');
+    //notification("Loading repositories!");
 
     getRepos(user, repos, errorMessage);
 }
@@ -123,7 +125,7 @@ function loadCommits(commitData, last){
 	}
 	
 	if(last){
-	    notification("");
+	    //$('#repoloading').css('display', 'none');
 	    
 	    var instruments = getInstruments();
 	    loadMIDI(commitData, instruments);
@@ -146,7 +148,6 @@ function startPlaying(data){
 function loadMIDI(data, instruments){
 
     //notification("loading MIDI with instrument " + instruments);
-    MIDI.loader = new widgets.Loader("Setting up the mix!!");
 
     MIDI.loadPlugin({
 	soundfontUrl: "./MIDI.js/soundfont/",
@@ -171,7 +172,8 @@ function playNote(val, note){
 
 function play(data){
 
-    MIDI.loader.stop();
+    //MIDI.loader.stop();
+    $('#repoloading').css('display', 'none');
 
     var notes = scale(data);
     //notification(notes);

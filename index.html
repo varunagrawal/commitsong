@@ -25,6 +25,17 @@
   </head>
 
   <body>
+    
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&appId=587441381302332&version=v2.1";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
     <header>
       <div id="header">The Commit Song</div>
     </header>
@@ -33,6 +44,9 @@
       <div id="github">Github user:</div>
       <div id="username" contenteditable="true" spellcheck="false">varunagrawal</div>
     </div>
+
+    <div class="fb-share-button" data-href="http://www.varunagrawal.me/commitsong/index.html" data-width="300">A button</div>
+
     <div id="start">
       <input id="play" type="button" value="Play" />
     </div>
@@ -46,6 +60,17 @@
       <div id="footer">
 	<a href="http://varunagrawal.me" target="_blank">Created by Varun Agrawal</a>
       </div>
+
+      
     </footer>
+
+    <div id="repoloading" class="wrap">
+      <div class="loader"></div>
+      <div class="loaderbefore"></div>
+      <div class="circular"></div>
+      <div class="circular another"></div>
+      <div class="text">Loading</div>
+    </div>
+
   </body>
 </html>
