@@ -57,6 +57,7 @@ header {
     max-width: 600px;
     width: 300px;
     min-width: 300px;
+    font-size: 10px;
 }
 
 footer {
