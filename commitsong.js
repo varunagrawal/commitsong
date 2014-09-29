@@ -5,7 +5,16 @@ $( document ).ready( function(){
     //loadMIDI(sampleData, ["acoustic_grand_piano"]);
 
     bindEvents();
+
+    /*$('.ui.sidebar').sidebar({
+	overlay: true
+    })
+    .sidebar('toggle');*/
+
+    //var oneYearAgo = moment().subtract(1, 'years');
+    //oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
     
+    //notification(getCommits("varunagrawal", "FEAR", oneYearAgo.format(), 1, []));
 });
 
 function bindEvents(){
@@ -17,40 +26,102 @@ function start(){
 
     var user = $('#username').text(); 
     
-    MIDI.loader = new widgets.Loader("Setting up the mix!!");
+    //MIDI.loader = new widgets.Loader("Setting up the mix!!");
     //$('#repoloading').css('display', 'block');
     //notification("Loading repositories!");
 
-    getRepos(user, repos, errorMessage);
+/*    var pages = getPages();
+
+    while(true){
+	var oldSize = allrepos.length;
+
+	request(githubAPI + "/users/" + username + "/repos", 'GET', {page: page, per_page: 100}, getAllRepos(allrepos), errorMessage);
+
+	if(oldSize == allrepos.length)
+	    break;
+    }
+*/
+    getUser(user);
+    //repos(repodata);
 }
 
-function repos(repodata){ 
+var githubAPI = "https://api.github.com"
 
-    var user = $('#username').text(); 
+function getUser(username){
+    request(githubAPI + "/users/" + username, 'GET', {}, true, getAllRepos, errorMessage);
+}
 
-    if(repodata.length == 0 && "message" in repodata)
-	notification("Invalid Github Id.");
-    else{
+function getAllRepos(user){
+
+    var pages = (user.public_repos / 100) + 1 | 0;
+
+    var commitData = createCommitArray();
+    
+    var last = false;
+
+    for(var i=0; i<pages; i++){
+	console.log("page: " + i);
+	
+	if(i+1 == pages)
+	    last = true;
+	
+	getRepos(user.login, i+1, commitData);
+    }
+
+    // Got all the commit data, now load the instruments and play!
+    //var instruments = getInstruments();
+    //loadMIDI(commitData, instruments);
+	
+}
+
+function getRepos(username, page, commitData){
+    request(githubAPI + "/users/" + username + "/repos", 'GET', {page: page, per_page: 100}, true, repos(commitData), errorMessage);
+}
+
+function repos(commitData){
+    return function(repodata){
+
+	var user = $('#username').text(); 
 	
 	var oneYearAgo = moment().subtract(1, 'years');
 	oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
-	
-	var commitData = createCommitArray();
-	var last = false;
-	
+
 	for(var i=0; i<repodata.length; i++){
 
-	    if(i == repodata.length-1)
-		last = true;
+	    var commits = [];
 
-	    getCommits(user, repodata[i].name, loadCommits(commitData, last), errorMessage, oneYearAgo.format());
+	    var page = 1;
+
+	    do{
+		commits = jQuery.parseJSON(getCommits(user, repodata[i].name, oneYearAgo.format(), page, commitData));
+		page += 1;
+
+		//notification(commits);
+		//break;
+		loadCommits(commitData, commits);
+	    }
+	    while(commits.length > 0);
+
+	    /*for(var page=1; page<=maxpages; page++){
+		if(lastpage && repodata.length -1  && page= maxpages){
+		    last = true;
+		}		getCommits(user, repodata[i].name, oneYearAgo.format(), page, commitData, last);
+		
+
+	    }*/
 	    
 	    //getCommits(user, repodata[i].name, display(commitData), errorMessage, oneYearAgo.format());
 	    //'2013-09-17T01:09:12+05:30'
 	}
-	
-	//notification(commitData);    
     }
+}
+
+function getCommits(username, repo, since, page, commitData){
+   
+    return request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {author: username, since: since, per_page:100, page: page}, false);
+
+    //request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {author: username, since: since, per_page:100, page: page}, false, loadCommits(commitData, last), errorMessage);
+    //request(githubAPI + "/repos/" + username + "/" + repo + "/stats/commit_activity", 'GET', {}, loadCommits(commitData), errorMessage);
 }
 
 function createCommitArray(){
@@ -68,48 +139,12 @@ function createCommitArray(){
     return commitData;
 }
 
-function display(commitData){
-    return function(data){
-	
-	var now = moment();    // current moment in datetime
-	var oneYearAgo = moment().subtract(1, 'years');    // datetime one year ago
-	oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);    // midnight one year ago. Midnight will be the standard time for comparison
-	//var day = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
-	//var previousDay = day;
-	//previousDay.subtract(1, 'days'); 
-
-	//var today = moment([now.year(), now.month(), now.date()]);
-
-	//var size = today.diff(oneYearAgo, 'days');
-
-	for(var i=0; i<data.length; i++){
-	    
-	    var commitDate = moment(data[i].commit.committer.date);
-	    commitDate = moment([commitDate.year(), commitDate.month(), commitDate.date()]); // commit date with time as midnight of that date
-	
-	    // get number of days since commitDate and oneYearAgo with both dates having time as midnight. -1 is for array indexing.
-	    commitData[commitDate.diff(oneYearAgo, 'days')-1] += 1;
-
-	    /*
-	    if(commitDate.isBefore(day) && commitDate.isAfter(previousDay)){
-		commitData[day.diff(oneYearAgo, 'days')] += 1;
-
-		previousDay.add(1, 'days');
-		day.add(1, 'days');
-	    }*/
-	    
-	}
-	
-	//notification(commitData);
-    }
-}
-
 function showActivity(val){
     $('#activity').text(val);
 }
 
-function loadCommits(commitData, last){
-    return function(data){
+function loadCommits(commitData, data){
+//    return function(data){
 
 	var now = moment();    // current moment in datetime
 	var oneYearAgo = moment().subtract(1, 'years');    // datetime one year ago
@@ -118,20 +153,23 @@ function loadCommits(commitData, last){
 	for(var i=0; i<data.length; i++){
 	    
 	    var commitDate = moment(data[i].commit.committer.date);
+	    //notification(commitDate);
 	    commitDate = moment([commitDate.year(), commitDate.month(), commitDate.date()]); // commit date with time as midnight of that date
 	
 	    // get number of days since commitDate and oneYearAgo with both dates having time as midnight. -1 is for array indexing.
 	    commitData[commitDate.diff(oneYearAgo, 'days')-1] += 1;
 	}
+
+	notification(commitData);
 	
-	if(last){
-	    //$('#repoloading').css('display', 'none');
+	/*if(lastDone){
+	    $('#repoloading').css('display', 'none');
 	    
 	    var instruments = getInstruments();
 	    loadMIDI(commitData, instruments);
-	}
+	}*/
 
-    }
+  //  }
 }
 
 function getInstruments(){
@@ -199,20 +237,9 @@ function play(data){
     }, 250);*/
 }
 
-function errorMessage(){
-    alert("Worst error message ever!!");
+function errorMessage(err){
+    alert("Worst error message ever!!" + JSON.stringify(err));
 }
-
-var githubAPI = "https://api.github.com"
-
-function getRepos(username, onSuccess, onError){
-    request(githubAPI + "/users/" + username + "/repos", 'GET', {}, onSuccess, onError);
-}
-
-function getCommits(username, repo, onSuccess, onError, since){
-    request(githubAPI + "/repos/" + username + "/" + repo + "/commits", 'GET', {author: username, since: since, per_page:200}, onSuccess, onError);
-}
-
 
 
 var sampleData = [2,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0,0,0,0,0,0,0,2,0,4,0,0,0,0,1,0,2,0,0,0,0,0,0,0,0,0,0,2,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,1,0,5,0,0,0,2,0,2,0,0,8,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,5,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,6,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,0,0,0,0,3,1,2,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,1,0,0,0,21,4,1,4,0];

@@ -1,28 +1,49 @@
-function request(url, type, data, onSuccess, onError, contentType){
+function request(url, type, data, async, onSuccess, onError, contentType){
 
     var contentType = contentType || 'application/x-www-form-urlencoded; charset=UTF-8';
-    
     if(contentType == 'application/json'){
 	data = JSON.stringify(data);
     }
 
-    $.ajax({
-	type: type,
-	url: url,
-	headers: { 'Accept': 'application/vnd.github.v3+json', 
-		   'Origin': 'http://www.varunagrawal.github.io'
-		 },
-	crossDomain: true,
-	contentType: contentType,
-	data: data,
-	dataType: 'json',
-	statusCode: {
-	    403: forbidden,
-	    404: function(){alert("Not found")}
-	},
-	error: onError,
-	success: onSuccess
-    });
+    if(async){
+	$.ajax({
+	    type: type,
+	    url: url,
+	    headers: { 'Accept': 'application/vnd.github.v3+json', 
+		       'Origin': 'http://www.varunagrawal.github.io'
+		     },
+	    crossDomain: true,
+	    contentType: contentType,
+	    data: data,
+	    dataType: 'json',
+	    statusCode: {
+		403: function(){ notification("Rate limit exceeded!\nPlease wait for a while and try again."); },
+		404: function(){alert("Not found")}
+	    },
+	    error: onError,
+	    success: onSuccess
+	});
+    }
+    else{
+	return $.ajax({
+	    type: type,
+	    url: url,
+	    async: false,
+	    headers: { 'Accept': 'application/vnd.github.v3+json', 
+		       'Origin': 'http://www.varunagrawal.github.io'
+		     },
+	    crossDomain: true,
+	    contentType: contentType,
+	    data: data,
+	    dataType: 'json',
+	    statusCode: {
+		403: function(){ notification("Rate limit exceeded!\nPlease wait for a while and try again."); },
+		404: function(){alert("Not found")}
+	    },
+	    error: onError,
+	    success: onSuccess
+	}).responseText;
+    }
 
 }
 
@@ -82,6 +103,6 @@ function notification(value){
 
 
 function forbidden(){
-    alert("forbidden");
+    //alert("forbidden");
     notification("Rate limit exceeded!\nPlease wait for a while and try again.");
 }

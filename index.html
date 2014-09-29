@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+
+    <meta property="fb:app_id" content="293658484160509" /> 
+    <meta property="og:url"    content="http://www.varunagrawal.me/commitsong/index.html" /> 
+    <meta property="og:title"  content="Commit Song" /> 
+    <meta property="og:image"  content="https://og.github.com/octocat/github-octocat@1200x630.png" />
+
     <meta charset="UTF-8"> 
     
     <link rel="stylesheet" type="text/css" href="commitsong.css"/>
@@ -50,9 +56,6 @@
     
     <!--Social Media done -->
 
-    <div class="fb-like" data-share="true" data-width="450" data-show-faces="true"></div>
-    <a href="https://twitter.com/share" class="twitter-share-button" data-text="Play the song of your Github commits!" data-via="varagrawal" data-hashtags="commitsong">Tweet</a>
-
     <header>
       <div id="header">The Commit Song</div>
     </header>
@@ -75,9 +78,12 @@
       <div id="footer">
 	<a href="http://varunagrawal.me" target="_blank">Created by Varun Agrawal</a>
       </div>
-
-      
     </footer>
+
+    <div class="ui sidebar">
+      <div class="fb-like" data-share="true" data-width="450" data-show-faces="true"></div>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-text="Play the song of your Github commits!" data-via="varagrawal" data-hashtags="commitsong">Tweet</a>
+    </div>
 
     <!--div id="repoloading" class="wrap">
       <div class="loader"></div>
