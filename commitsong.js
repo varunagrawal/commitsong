@@ -11,16 +11,6 @@ $( document ).ready( function(){
     })
     .sidebar('toggle');*/
 
-    var oneYearAgo = moment().subtract(1, 'years');
-    oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
-
-    var commitDate = moment("2013-09-30T11:19:55Z");
-//    var commitDate = moment("2013-10-03T19:13:44Z");
-    alert(commitDate.utc());
-    commitDate = moment([commitDate.year(), commitDate.month(), commitDate.date()]); // commit date with time as midnight of that date
-    alert(commitDate);
-    alert(commitDate.diff(oneYearAgo, 'days')-1);
-    //notification(getCommits("varunagrawal", "FEAR", oneYearAgo.format(), 1, []));
 });
 
 function bindEvents(){
@@ -153,14 +143,14 @@ function loadCommits(commitData, data){
 //    return function(data){
 
 	var now = moment();    // current moment in datetime
-	var oneYearAgo = moment.utc().subtract(1, 'years');    // datetime one year ago
-	oneYearAgo = moment.utc([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);    // midnight one year ago. Midnight will be the standard time for comparison
+	var oneYearAgo = moment().subtract(1, 'years');    // datetime one year ago
+	oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);    // midnight one year ago. Midnight will be the standard time for comparison
 
 	for(var i=0; i<data.length; i++){
 	    
-	    var commitDate = moment.utc(data[i].commit.committer.date);
+	    var commitDate = moment(data[i].commit.committer.date);
 	    //notification(commitDate);
-	    commitDate = moment.utc([commitDate.year(), commitDate.month(), commitDate.date()]); // commit date with time as midnight of that date
+	    commitDate = moment([commitDate.year(), commitDate.month(), commitDate.date()]); // commit date with time as midnight of that date
 	
 	    // get number of days since commitDate and oneYearAgo with both dates having time as midnight. -1 is for array indexing.
 	    commitData[commitDate.diff(oneYearAgo, 'days')-1] += 1;
