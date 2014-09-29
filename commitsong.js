@@ -23,22 +23,10 @@ function start(){
     var user = $('#username').text(); 
     
     //MIDI.loader = new widgets.Loader("Setting up the mix!!");
-    //$('#repoloading').css('display', 'block');
+    $('#repoloading').css('display', 'block');
     //notification("Loading repositories!");
 
-/*    var pages = getPages();
-
-    while(true){
-	var oldSize = allrepos.length;
-
-	request(githubAPI + "/users/" + username + "/repos", 'GET', {page: page, per_page: 100}, getAllRepos(allrepos), errorMessage);
-
-	if(oldSize == allrepos.length)
-	    break;
-    }
-*/
     getUser(user);
-    //repos(repodata);
 }
 
 var githubAPI = "https://api.github.com"
@@ -61,26 +49,23 @@ function getAllRepos(user){
 	if(i+1 == pages)
 	    last = true;
 	
-	getRepos(user.login, i+1, commitData);
-    }
-
-    // Got all the commit data, now load the instruments and play!
-    //var instruments = getInstruments();
-    //loadMIDI(commitData, instruments);
-	
+	getRepos(user.login, i+1, commitData, last);
+    }	
 }
 
-function getRepos(username, page, commitData){
-    request(githubAPI + "/users/" + username + "/repos", 'GET', {page: page, per_page: 100}, true, repos(commitData), errorMessage);
+function getRepos(username, page, commitData, last){
+    request(githubAPI + "/users/" + username + "/repos", 'GET', {page: page, per_page: 100}, true, repos(commitData, last), errorMessage);
 }
 
-function repos(commitData){
+function repos(commitData, lastPage){
     return function(repodata){
 
 	var user = $('#username').text(); 
 	
 	var oneYearAgo = moment().subtract(1, 'years');
 	oneYearAgo = moment([oneYearAgo.year(), oneYearAgo.month(), oneYearAgo.date()]);
+
+	var last = false;
 
 	for(var i=0; i<repodata.length; i++){
 
@@ -92,23 +77,24 @@ function repos(commitData){
 		commits = jQuery.parseJSON(getCommits(user, repodata[i].name, oneYearAgo.format(), page, commitData));
 		page += 1;
 
-		//notification(commits);
-		//break;
 		loadCommits(commitData, commits);
 	    }
 	    while(commits.length > 0);
 
-	    /*for(var page=1; page<=maxpages; page++){
-		if(lastpage && repodata.length -1  && page= maxpages){
-		    last = true;
-		}		getCommits(user, repodata[i].name, oneYearAgo.format(), page, commitData, last);
-		
-
-	    }*/
-	    
+	    if(lastPage && i === repodata.length - 1){
+		last = true;
+	    }
+	   
 	    //getCommits(user, repodata[i].name, display(commitData), errorMessage, oneYearAgo.format());
 	    //'2013-09-17T01:09:12+05:30'
 	}
+
+	if(last){
+	    // Got all the commit data, now load the instruments and play!
+	    var instruments = getInstruments();
+	    loadMIDI(commitData, instruments);
+	}
+
     }
 }
 
@@ -140,7 +126,6 @@ function showActivity(val){
 }
 
 function loadCommits(commitData, data){
-//    return function(data){
 
 	var now = moment();    // current moment in datetime
 	var oneYearAgo = moment().subtract(1, 'years');    // datetime one year ago
@@ -156,7 +141,7 @@ function loadCommits(commitData, data){
 	    commitData[commitDate.diff(oneYearAgo, 'days')-1] += 1;
 	}
 
-	notification(commitData);
+	//notification(commitData);
 	
 	/*if(lastDone){
 	    $('#repoloading').css('display', 'none');
@@ -164,19 +149,10 @@ function loadCommits(commitData, data){
 	    var instruments = getInstruments();
 	    loadMIDI(commitData, instruments);
 	}*/
-
-  //  }
 }
 
 function getInstruments(){
     return ["acoustic_grand_piano"];
-}
-
-function startPlaying(data){
-    return function(){
-	//notification(notes);
-	play(data);
-    }
 }
 
 function loadMIDI(data, instruments){
@@ -189,6 +165,13 @@ function loadMIDI(data, instruments){
 	callback: startPlaying(data)
     });
 
+}
+
+function startPlaying(data){
+    return function(){
+	//notification(notes);
+	play(data);
+    }
 }
 
 function playNote(val, note){
@@ -206,8 +189,8 @@ function playNote(val, note){
 
 function play(data){
 
-    MIDI.loader.stop();
-    //$('#repoloading').css('display', 'none');
+    //MIDI.loader.stop();
+    $('#repoloading').css('display', 'none');
 
     var notes = scale(data);
     //notification(notes);
@@ -234,7 +217,8 @@ function play(data){
 }
 
 function errorMessage(err){
-    alert("Worst error message ever!!" + JSON.stringify(err));
+    alert("Oops! Something went wrong!");
+    notification(JSON.stringify(err));
 }
 
 
