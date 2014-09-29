@@ -6,15 +6,17 @@ $( document ).ready( function(){
 
     bindEvents();
 
-    /*$('.ui.sidebar').sidebar({
-	overlay: true
-    })
-    .sidebar('toggle');*/
-
 });
 
 function bindEvents(){
     $('#play').on("click", start);
+
+    $(".ui.icon.button").on("click", function(){
+	$('.ui.thin.sidebar').sidebar({
+	    overlay: true,
+	})
+	.sidebar('toggle');
+    });
 }
 
 function start(){
