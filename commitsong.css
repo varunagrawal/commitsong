@@ -1,52 +1,38 @@
-body {
-    margin-bottom: 100px;
-    height: auto;
+html, body {
+   /* margin-bottom: 100px;*/
+    height: 100%;
     font-family: segoe-ui, sans-serif, cursive;
 }
 
 a {
-	text-decoration: none;
-	color: #FFFFFF;
+    text-decoration: none;
+    color: #eeaa55/
 }
 
-header {
-    background-color: #333;
-    width: 100%;
-}
-
-#header {
-    max-width: 380px;
-    font-size: 40px;
-    color: #FFFFFF;
-    margin: 0 auto;
-}
-
-#github-info {
-	max-width: 150px;
-   margin: 20px auto;
-   text-align: center;
+/* Wrapper for page content to push down footer */
+#wrap {
+  min-height: 100%;
+  height: auto;
+  /* Negative indent footer by its height */
+  margin: 0 auto -60px;
+  /* Pad bottom by footer height */
+  padding: 0 0 60px;
 }
 
 #github {
-    font-size: 20px;
+    /*font-size: 20px;
     /*text-shadow: 1px 1px 0px #aaa;*/
+    text-align: center;
 }
 
 #username {
-    font-size: 15px;
-    margin-top: 20px;
-    background-color: rgba(0, 0, 0, 0.6);
-    text-shadow: -1px 1px 0px #aaa;
-}
-
-#start {
-    max-width: 100px;
-    margin: 50px auto;
+    font-size: 20px;
+    max-width: 200px;
+    background-color: rgba(0, 0, 0, 0.4);
+    /*text-shadow: -1px 1px 0px #aaa;*/
     text-align: center;
-}
-#play {
-    font-size: 25px;
-    float: left;
+    margin-top: 1%;
+    margin-bottom: 3%;
 }
 
 #activity {
@@ -64,20 +50,22 @@ header {
     text-align: center;
 }
 
-footer {
+/*footer {
     position: fixed;
     bottom: 0;
     left: 0;
     height: 50px;
     width: 100%;
     text-align: center;
-    background-color: rgba(65, 65, 65, 0.3);
-}
+
+}*/
 
 #footer {
-    color: #555;
+    color: #fff;
+    /*background-color: rgba(65, 65, 65, 0.3);*/
     font-size: 20px;
-    margin: 10px auto;
+    text-align: center;
+    /*margin: 10px auto;*/
 }
 
 

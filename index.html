@@ -7,15 +7,90 @@
     <meta property="og:title"  content="Commit Song" /> 
     <meta property="og:image"  content="https://og.github.com/octocat/github-octocat@1200x630.png" />
 
-    <meta charset="UTF-8"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <link rel="stylesheet" type="text/css" href="commitsong.css"/>
 
-    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.0.min.js"></script>
+    <!-- Bootstrap -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!--Semantic UI-->
+    <!--link rel="stylesheet" type="text/css" href="packaged/css/semantic.css"/>
+    <script src="packaged/javascript/semantic.js"></script-->
+
+    <title>Commit Song - Play the music of your commits</title>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container"> 
+	<div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">The Commit Song</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+	  <!--ul class="nav navbar-nav navbar-right">
+	    <li><div id="about">About</div></li>
+	    <li><div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div></li>
+	    <li><a href="https://twitter.com/share" class="twitter-share-button" data-text="Play the song of your Github commits!" data-via="varagrawal" data-hashtags="commitsong">Tweet</a></li>
+	  </ul-->
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+            
+    <div id="wrap">
+      <div class="container">
+      
+	<div class="jumbotron">
+
+	  <h2 id="github">Github user:</h2>
+	  <div id="username" class="center-block" contenteditable="true" spellcheck="false">varunagrawal</div>
+
+
+	  <div id="start" class="text-center" >
+	    <input id="play" class="btn btn-default text-center" type="button" value="Play" />
+	  </div>
+
+	  <div id="activity">
+	  </div>
+
+	  <div id="data"></div>
+	</div>
+	
+	<div id="repoloading" class="wrap">
+	  <div class="loader"></div>
+	  <div class="loaderbefore"></div>
+	  <div class="circular"></div>
+	  <div class="circular another"></div>
+	  <div class="text">Loading</div>
+	</div>
+
+      </div>
+    </div>
+
+    <footer id="footer" class="footer">
+      <div class="container">
+	<a href="http://varunagrawal.me" target="_blank">Created by Varun Agrawal</a>
+      </div>
+    </footer>
+
+     <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="commitsong.js"></script>
     <script src="utils.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js"></script>
-
     <script src="MIDI.js/js/MIDI/AudioDetect.js" type="text/javascript"></script>    
     <script src="MIDI.js/js/MIDI/LoadPlugin.js" type="text/javascript"></script>
     <script src="MIDI.js/js/MIDI/Plugin.js" type="text/javascript"></script>
@@ -26,63 +101,6 @@
     <!-- extras -->
     <script src="MIDI.js/inc/Base64.js" type="text/javascript"></script>
     <script src="MIDI.js/inc/base64binary.js" type="text/javascript"></script>
-    
-    <!--Semantic UI-->
-    <link rel="stylesheet" type="text/css" href="packaged/css/semantic.css"/>
-    <script src="packaged/javascript/semantic.js"></script>
-
-    <title>Commit Song - Play the music of your commits</title>
-  </head>
-
-  <body>
-
-    <header>
-      <div id="header">The Commit Song</div>
-    </header>
-    
-    <div class="ui icon button toggle" style="margin-left: 13%;"><i class="reorder icon"></i></div>    
-
-    <div class="ui thin sidebar" style="background-color:#333; text-align:center">
-
-      <div id="about"></div>
-      
-      <div id="social" style="background-color:rgba(255,255,255,0.2); margin-top:28%">
-	<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
-	<br/>
-	<br/>
-	<br/>
-	<a href="https://twitter.com/share" class="twitter-share-button" data-text="Play the song of your Github commits!" data-via="varagrawal" data-hashtags="commitsong">Tweet</a>
-      </div>
-    </div>
-
-
-    <div id="github-info">
-      <div id="github">Github user:</div>
-      <div id="username" contenteditable="true" spellcheck="false">varunagrawal</div>
-    </div>
-    
-    <div id="start">
-      <input id="play" type="button" value="Play" />
-    </div>
-    
-    <div id="activity">
-    </div>
-
-    <div id="data"></div>
-
-    <footer>
-      <div id="footer">
-	<a href="http://varunagrawal.me" target="_blank">Created by Varun Agrawal</a>
-      </div>
-    </footer>
-    
-    <div id="repoloading" class="wrap">
-      <div class="loader"></div>
-      <div class="loaderbefore"></div>
-      <div class="circular"></div>
-      <div class="circular another"></div>
-      <div class="text">Loading</div>
-    </div>
 
   </body>
   
