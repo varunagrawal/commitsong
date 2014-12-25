@@ -38,7 +38,16 @@
     
     <!-- Facebook Share Button -->
     <div id="fb-root"></div>
-    <script>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=293658484160509&version=v2.0";
+      fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <!--script>
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '293658484160509',
@@ -55,7 +64,7 @@
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
-    </script>
+    </script-->
 
     <!-- Twitter Tweet button -->
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
@@ -73,7 +82,9 @@
       <div id="about"></div>
       
       <div id="social" style="background-color:rgba(255,255,255,0.2); margin-top:28%">
-	<div class="fb-share-button" data-width="450"></div>
+	<div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count"></div>
+	<br/>
+	<br/>
 	<br/>
 	<a href="https://twitter.com/share" class="twitter-share-button" data-text="Play the song of your Github commits!" data-via="varagrawal" data-hashtags="commitsong">Tweet</a>
       </div>
