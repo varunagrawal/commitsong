@@ -17,8 +17,8 @@ function request(url, type, data, async, onSuccess, onError, contentType){
 	    data: data,
 	    dataType: 'json',
 	    statusCode: {
-		403: function(){ notification("Rate limit exceeded!\nPlease wait for a while and try again."); },
-		404: function(){alert("Not found")}
+		403: function(){ /*notification("Rate limit exceeded!\nPlease wait for a while and try again.");*/ },
+		404: function(){ alert("Not found") }
 	    },
 	    error: onError,
 	    success: onSuccess
@@ -37,8 +37,8 @@ function request(url, type, data, async, onSuccess, onError, contentType){
 	    data: data,
 	    dataType: 'json',
 	    statusCode: {
-		403: function(){ notification("Rate limit exceeded!\nPlease wait for a while and try again."); },
-		404: function(){alert("Not found")}
+		403: function(){ /*notification("Rate limit exceeded!\nPlease wait for a while and try again.");*/ },
+		404: function(){ alert("Not found" )}
 	    },
 	    error: onError,
 	    success: onSuccess
