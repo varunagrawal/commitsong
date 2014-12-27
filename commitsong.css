@@ -6,7 +6,12 @@ html, body {
 
 a {
     text-decoration: none;
-    color: #eeaa55/
+    color: #eeaa55;
+}
+
+.social {
+    margin-top: 5%;
+    margin-right: 3%;
 }
 
 /* Wrapper for page content to push down footer */
